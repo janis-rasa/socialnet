@@ -21,6 +21,7 @@ const Header = () => {
 						<Nav.Link href="#home">Home</Nav.Link>
 						<Nav.Link href="#link">Link</Nav.Link>
 						<Nav.Link href="#second">Second</Nav.Link>
+						<Nav.Link href="#third">Third</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
