@@ -1,0 +1,11 @@
+.item {
+	width: 100%;
+
+	&__img {
+		display: block;
+		
+		&_card {
+			width: 100%;
+		}
+	}
+}
