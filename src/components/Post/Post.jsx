@@ -1,21 +1,20 @@
-import React from "react"
-import Card from "react-bootstrap/Card"
-import classes from "./Post.module.scss"
+import React from "react";
+import classes from "./Post.module.scss";
 
 const Post = (props) => {
 	return (
-		<Card className={classes.item}>
-			<Card.Img
-				variant="top"
+		<div className={`${classes.item} card`}>
+			<img
 				src={props.post.imageUrl}
-				className={`${classes.item__img} ${classes.item__img_card}`}
+				className={`${classes.item__img} ${classes.item__img_card} card-img-top`}
+				alt="Post"
 			/>
-			<Card.Body>
-				<Card.Title>{props.post.title}</Card.Title>
-				<Card.Text>{props.post.text}</Card.Text>
-			</Card.Body>
-		</Card>
-	)
-}
+			<div className="card-body">
+				<h5 className="card-title">{props.post.title}</h5>
+				<p className="card-text">{props.post.text}</p>
+			</div>
+		</div>
+	);
+};
 
-export default Post
+export default Post;
