@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "../Navbar/Navbar";
+import Header from "../Header/Header";
 import Main from "../Main/Main";
 
 const App = () => {
 	return (
 		<React.Fragment>
-			<Navbar />
+			<Header />
 			<Main />
 		</React.Fragment>
 	);

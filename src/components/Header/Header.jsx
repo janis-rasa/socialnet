@@ -1,22 +1,26 @@
 import React from "react";
-import classes from "./Navbar.module.scss";
+import styles from "./Header.module.scss";
 import NavbarLinks from "../NavbarLinks/NavbarLinks";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Header = () => {
 	const navLinks = [
 		{ link: "/", linkTitle: "Home" },
 		{ link: "/profile", linkTitle: "Profile" },
 		{ link: "/posts", linkTitle: "Posts" },
+		{ link: "/messages", linkTitle: "Messages" },
 	];
 	return (
-		<nav className="navbar navbar-expand-lg bg-light">
-			<div className="container">
-				<a href="/" className="navbar-brand">
+		<Navbar bg="light" expand="lg">
+			<Container>
+				<Link to="/" className="navbar-brand">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="40"
 						height="32"
-						className={`d-block my-1 ${classes.logo}`}
+						className={`d-block my-1 ${styles.logo}`}
 						viewBox="0 0 118 94"
 						role="img"
 					>
@@ -28,24 +32,14 @@ const Navbar = () => {
 							fill="currentColor"
 						></path>
 					</svg>
-				</a>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon"></span>
-				</button>
-				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+				</Link>
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Collapse id="basic-navbar-nav">
 					<NavbarLinks links={navLinks} />
-				</div>
-			</div>
-		</nav>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
 	);
 };
 
-export default Navbar;
+export default Header;

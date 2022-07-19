@@ -1,22 +1,22 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import classes from "./NavbarLinks.module.scss";
+import styles from "./NavbarLinks.module.scss";
+import { Nav } from "react-bootstrap";
+import LinkContainer from "react-router-bootstrap/LinkContainer";
 
 const NavbarLinks = (props) => {
 	const linksRender = props.links.map((link, index) => (
-		<li className="nav-item" key={index}>
-			<NavLink
-				className={({ isActive }) =>
-					(isActive ? classes.active : "") + ` ${classes.link} nav-link`
-				}
-				to={link.link}
+		<LinkContainer to={link.link} key={"navbarlinks" + index}>
+			<Nav.Link
+				className={styles.link}
+				eventKey={"link-" + index}
 				{...({ isActive }) => (isActive ? 'aria-current="page"' : "")}
 			>
 				{link.linkTitle}
-			</NavLink>
-		</li>
+			</Nav.Link>
+		</LinkContainer>
 	));
-	return <ul className="navbar-nav me-auto mb-2 mb-lg-0">{linksRender}</ul>;
+
+	return <Nav className="me-auto mb-2 mb-lg-0">{linksRender}</Nav>;
 };
 
 export default NavbarLinks;

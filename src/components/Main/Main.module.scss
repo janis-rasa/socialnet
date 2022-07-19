@@ -1,29 +1,34 @@
+.wrapper {
+	overflow-x: hidden;
+	width: 100%;
+}
+
 .fadeIn {
-	animation: 0.5s fadeIn forwards;
+	animation: 0.3s pageFadeIn forwards;
 }
 
 .fadeOut {
-	animation: 0.5s fadeOut forwards;
+	animation: 0.3s pageFadeOut forwards;
 }
 
-@keyframes fadeIn {
+@keyframes pageFadeIn {
 	from {
 		opacity: 0;
-		transform: translate(-20px, 0);
+		transform: translate(-16px, 0);
 	}
 	to {
 		opacity: 1;
-		transform: translate(0px, 0px);
+		transform: translate(0, 0);
 	}
 }
 
-@keyframes fadeOut {
+@keyframes pageFadeOut {
 	from {
 		opacity: 1;
-		transform: translate(0px, 0px);
+		transform: translate(0, 0);
 	}
 	to {
-		transform: translate(-20px, 0);
+		transform: translate(16px, 0);
 		opacity: 0;
 	}
 }

@@ -1,19 +1,23 @@
 import React from "react";
-import classes from "./Post.module.scss";
+import Card from "react-bootstrap/Card";
+import styles from "./Post.module.scss";
 
 const Post = (props) => {
 	return (
-		<div className={`${classes.item} card`}>
-			<img
+		<Card className={styles.item}>
+			<Card.Img
+				variant="top"
 				src={props.post.imageUrl}
-				className={`${classes.item__img} ${classes.item__img_card} card-img-top`}
-				alt="Post"
+				//className={`${styles.item__img} ${styles.item__img_card}`}
+				alt={props.post.title}
 			/>
-			<div className="card-body">
-				<h5 className="card-title">{props.post.title}</h5>
-				<p className="card-text">{props.post.text}</p>
-			</div>
-		</div>
+			<Card.Body>
+				<Card.Title className="header-underscore">
+					{props.post.title}
+				</Card.Title>
+				<Card.Text>{props.post.text}</Card.Text>
+			</Card.Body>
+		</Card>
 	);
 };
 

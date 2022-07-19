@@ -1,5 +1,6 @@
 import Post from "../Post/Post";
 import React from "react";
+import { Col, Row } from "react-bootstrap";
 
 const PostList = () => {
 	const posts = [
@@ -18,12 +19,17 @@ const PostList = () => {
 	];
 
 	const postsRender = posts.map((post, index) => (
-		<div className="col-12 col-md-6 col-lg-4 col-xl-3 d-flex" key={index}>
+		<Col md={6} lg={4} xl={3} className="d-flex mb-3" key={"post" + index}>
 			<Post post={post} />
-		</div>
+		</Col>
 	));
 
-	return <div className="row">{postsRender}</div>;
+	return (
+		<React.Fragment>
+			<h1 className="visually-hidden">Posts</h1>
+			<Row>{postsRender}</Row>
+		</React.Fragment>
+	);
 };
 
 export default PostList;
