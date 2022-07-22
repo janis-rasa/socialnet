@@ -5,7 +5,7 @@ import LinkContainer from "react-router-bootstrap/LinkContainer";
 
 const NavbarLinks = (props) => {
 	const linksRender = props.links.map((link, index) => (
-		<LinkContainer to={link.link} key={"navbarlinks" + index}>
+		<LinkContainer to={link.link} key={"navbarLinks" + index}>
 			<Nav.Link
 				className={styles.link}
 				eventKey={"link-" + index}

@@ -5,13 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 
-const Header = () => {
-	const navLinks = [
-		{ link: "/", linkTitle: "Home" },
-		{ link: "/profile", linkTitle: "Profile" },
-		{ link: "/posts", linkTitle: "Posts" },
-		{ link: "/messages", linkTitle: "Messages" },
-	];
+const Header = (props) => {
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container>
@@ -35,7 +29,7 @@ const Header = () => {
 				</Link>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<NavbarLinks links={navLinks} />
+					<NavbarLinks links={props.navLinks} />
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

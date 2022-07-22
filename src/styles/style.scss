@@ -1,0 +1,37 @@
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+body {
+	background-color: $body-background-color;
+}
+
+.header-underscore {
+	&::after {
+		content: "\2014";
+		display: block;
+		line-height: 1;
+	}
+}
+
+.list-group-item > .nav-link:hover,
+.list-group-item > .nav-link {
+	color: inherit;
+}
+
+.list-group-item > .nav-link:hover {
+	color: $primary;
+}
+
+.list-group-item.active > .nav-link:hover {
+	color: $black;
+}
+
+.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle),
+.btn-group-vertical > .btn-group:not(:last-child) > .btn {
+	border-bottom-color: $white;
+}
+
+.btn-group-vertical > .btn ~ .btn,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn {
+	border-top-color: $white;
+}

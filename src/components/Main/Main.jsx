@@ -8,7 +8,7 @@ import styles from "./Main.module.scss";
 import { Container } from "react-bootstrap";
 import NoMatch from "../NoMatch/NoMatch";
 
-const Main = () => {
+const Main = (props) => {
 	const location = useLocation();
 	const [displayLocation, setDisplayLocation] = useState(location);
 	const [transitionStage, setTransitionStage] = useState(styles.fadeIn);
@@ -34,8 +34,23 @@ const Main = () => {
 					<Routes location={displayLocation}>
 						<Route path="/" element={<Home />} />
 						<Route path="/profile" element={<Profile />} />
-						<Route path="/posts" element={<PostList />} />
-						<Route path="/messages/*" element={<MessagesList />} />
+						<Route
+							path="/posts"
+							element={
+								<PostList
+									posts={props.posts}
+									addPost={props.addPost}
+									newPost={props.newPost}
+									updatePost={props.updatePost}
+								/>
+							}
+						/>
+						<Route
+							path="/messages/*"
+							element={
+								<MessagesList users={props.users} messages={props.messages} />
+							}
+						/>
 						<Route path="*" element={<NoMatch />} />
 					</Routes>
 				</Container>
