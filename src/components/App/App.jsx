@@ -11,9 +11,8 @@ const App = (props) => {
 				posts={props.state.posts}
 				users={props.state.users}
 				messages={props.state.messages}
-				addPost={props.addPost}
 				newPost={props.state.newPost}
-				updatePost={props.updatePost}
+				dispatch={props.dispatch}
 			/>
 		</React.Fragment>
 	);

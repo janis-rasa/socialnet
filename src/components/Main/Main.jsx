@@ -39,9 +39,8 @@ const Main = (props) => {
 							element={
 								<PostList
 									posts={props.posts}
-									addPost={props.addPost}
+									dispatch={props.dispatch}
 									newPost={props.newPost}
-									updatePost={props.updatePost}
 								/>
 							}
 						/>

@@ -13,7 +13,7 @@ const MessageContainer = (props) => {
 			let messagesIndex = messages.findIndex(
 				(element) => element.userId === parseInt(userId)
 			);
-			if (messagesIndex > 0) {
+			if (messagesIndex >= 0) {
 				setSelectedMessages(messages[messagesIndex]);
 			}
 			if (!activeUser) {

@@ -13,11 +13,7 @@ const PostList = (props) => {
 	return (
 		<React.Fragment>
 			<h1 className="visually-hidden">Posts</h1>
-			<NewPost
-				addPost={props.addPost}
-				newPost={props.newPost}
-				updatePost={props.updatePost}
-			/>
+			<NewPost dispatch={props.dispatch} newPost={props.newPost} />
 			<Row>{postsRender}</Row>
 		</React.Fragment>
 	);

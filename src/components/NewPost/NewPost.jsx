@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+import {
+	addPostActionCreator,
+	updatePostActionCreator,
+} from "../../redux/state";
 
 const NewPost = (props) => {
 	const [show, setShow] = useState(false);
@@ -7,20 +11,14 @@ const NewPost = (props) => {
 	const handleShow = () => setShow(true);
 
 	const handleChangePost = (event) => {
-		switch (event.target.name) {
-			case "postTitle":
-				props.updatePost({ ...props.newPost, postTitle: event.target.value });
-				break;
-			case "postText":
-				props.updatePost({ ...props.newPost, postText: event.target.value });
-				break;
-			default:
-		}
+		let postValue = { ...props.newPost };
+		postValue[event.target.name] = event.target.value;
+		props.dispatch(updatePostActionCreator(postValue));
 	};
 
 	const handleSavePost = (event) => {
 		event.preventDefault();
-		props.addPost();
+		props.dispatch(addPostActionCreator());
 		handleClose();
 	};
 

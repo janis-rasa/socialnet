@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Row, Col, ListGroup } from "react-bootstrap";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import MessageContainer from "../Message/MessageContainer";
 import UserItem from "../UserItem/UserItem";
 
 const MessagesList = (props) => {
 	const [activeUser, setActiveUser] = useState(0);
+	let location = useLocation().pathname.split("/");
+	if (!location[2] && activeUser) {
+		setActiveUser(0);
+	}
+
 	const userListRender = props.users.map((user, index) => (
 		<UserItem
 			setActiveUser={setActiveUser}
