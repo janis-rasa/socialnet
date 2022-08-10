@@ -14,7 +14,7 @@ const UserItem = (props) => {
 				onClick={handleActiveUser}
 				className="nav-link"
 			>
-				{props.user.title}
+				{props.user.firstName} {props.user.lastName}
 			</Link>
 		</ListGroup.Item>
 	);

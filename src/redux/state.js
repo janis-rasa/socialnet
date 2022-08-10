@@ -1,5 +1,7 @@
-const ADD_POST = "ADD-POST";
-const UPDATE_POST = "UPDATE-POST";
+const ADD_POST = "ADD_POST";
+const UPDATE_POST = "UPDATE_POST";
+const ADD_MESSAGE = "ADD_MESSAGE";
+const UPDATE_MESSAGE = "UPDATE_MESSAGE";
 let store = {
 	_state: {
 		posts: [
@@ -26,24 +28,99 @@ let store = {
 			{
 				userId: 1,
 				messages: [
-					"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-					"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.",
-					"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+					{
+						text: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ",
+						timestamp: 1659339265000,
+						targetUserId: 3,
+					},
+					{
+						text: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. ",
+						timestamp: 1659382465000,
+						targetUserId: 3,
+					},
+					{
+						text: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+						timestamp: 1659425665000,
+						targetUserId: 3,
+					},
 				],
 			},
 			{
 				userId: 2,
 				messages: [
-					"It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-					"More recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-					"Was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software.",
-					"Alternatively, you can use this shorthand version for Cards with body only, and no other children. This is some text within a card body.",
+					{
+						text: "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+						timestamp: 1659339265000,
+						targetUserId: 3,
+					},
+					{
+						text: "More recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+						timestamp: 1659425665000,
+						targetUserId: 3,
+					},
+					{
+						text: "Was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software.",
+						timestamp: 1659468865000,
+						targetUserId: 3,
+					},
+					{
+						text: "Alternatively, you can use this shorthand version for Cards with body only, and no other children. This is some text within a card body.",
+						timestamp: 1659627265000,
+						targetUserId: 3,
+					},
+					{
+						text: "Alternatively, you can use this shorthand version for Cards with body only, and no other children. This is some text within a card body.",
+						timestamp: 1659967123000,
+						targetUserId: 3,
+					},
+				],
+			},
+			{
+				userId: 3,
+				messages: [
+					{
+						text: "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+						timestamp: 1659339270000,
+						targetUserId: 1,
+					},
+					{
+						text: "More recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+						timestamp: 1659425665000,
+						targetUserId: 1,
+					},
+					{
+						text: "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. ",
+						timestamp: 1659468865000,
+						targetUserId: 1,
+					},
+					{
+						text: "Alternatively, you can use this shorthand version for Cards with body only, and no other children. This is some text within a card body.",
+						timestamp: 1659627265000,
+						targetUserId: 1,
+					},
+					{
+						text: "It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. ",
+						timestamp: 1659339285000,
+						targetUserId: 2,
+					},
+					{
+						text: "Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.",
+						timestamp: 1659382565000,
+						targetUserId: 2,
+					},
+					{
+						text: "Quisque at placerat est. In elit sapien, bibendum quis euismod eget, ultricies eget ex. Cras iaculis rhoncus sodales. Duis ut mi euismod, rhoncus nisl non, efficitur magna. Curabitur laoreet eros et elit convallis placerat. Sed tincidunt sagittis tellus, sit amet ultrices nibh pellentesque at. Quisque efficitur lectus id magna ultricies commodo. Aenean a egestas ipsum. ",
+						timestamp: 1659435665000,
+						targetUserId: 2,
+					},
 				],
 			},
 		],
+		newMessage: "",
 		users: [
-			{ title: "First", userId: 1 },
-			{ title: "Second", userId: 2 },
+			{ firstName: "First", lastName: "User", userId: 1 },
+			{ firstName: "Second", lastName: "User", userId: 2 },
+			{ firstName: "FirstName", lastName: "LastName", userId: 3 },
 		],
 		navLinks: [
 			{ link: "/", linkTitle: "Home" },
@@ -51,6 +128,14 @@ let store = {
 			{ link: "/posts", linkTitle: "Posts" },
 			{ link: "/messages", linkTitle: "Messages" },
 		],
+		profile: {
+			userId: 3,
+			firstName: "FirstName",
+			lastName: "LastName",
+			email: "test@mail.com",
+			userLocale: "lv",
+			info: "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
+		},
 	},
 	_callSubscriber() {
 		console.log("render");
@@ -79,6 +164,27 @@ let store = {
 				this._state.newPost = action.postValue;
 				this._callSubscriber();
 				break;
+			case ADD_MESSAGE:
+				const userIndex = this._state.messages.findIndex(
+					(element) => element.userId === action.userId
+				);
+				if (userIndex >= 0) {
+					this._state.messages[userIndex].messages = [
+						...this._state.messages[userIndex].messages,
+						{
+							text: this._state.newMessage,
+							targetUserId: action.targetUserId,
+							timestamp: Date.now(),
+						},
+					];
+					this._state.newMessage = "";
+					this._callSubscriber();
+				}
+				break;
+			case UPDATE_MESSAGE:
+				this._state.newMessage = action.text;
+				this._callSubscriber();
+				break;
 			default:
 				return this._state;
 		}
@@ -90,6 +196,17 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const updatePostActionCreator = (postValue) => ({
 	type: UPDATE_POST,
 	postValue: postValue,
+});
+
+export const addMessageActionCreator = (targetUserId, currentUserId) => ({
+	type: ADD_MESSAGE,
+	targetUserId: targetUserId,
+	userId: currentUserId,
+});
+
+export const updateMessageActionCreator = (text) => ({
+	type: UPDATE_MESSAGE,
+	text: text,
 });
 
 // @ts-ignore

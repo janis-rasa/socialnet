@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import {
 	addPostActionCreator,
 	updatePostActionCreator,
@@ -25,7 +27,8 @@ const NewPost = (props) => {
 	return (
 		<div className="mb-3">
 			<Button variant="primary" onClick={handleShow}>
-				Add new post
+				<FontAwesomeIcon icon={regular("square-plus")} size="lg" />
+				<span className="ms-2">Add new post</span>
 			</Button>
 			<Modal show={show} onHide={handleClose} size="lg">
 				<Form onSubmit={handleSavePost}>
@@ -57,7 +60,8 @@ const NewPost = (props) => {
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="primary" type="submit">
-							Save post
+							<FontAwesomeIcon icon={regular("square-check")} size="lg" />
+							<span className="ms-2">Save post</span>
 						</Button>
 					</Modal.Footer>
 				</Form>

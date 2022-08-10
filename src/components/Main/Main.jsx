@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PostList from "../PostList/PostList";
 import Profile from "../Profile/Profile";
-import MessagesList from "../MessagesList/MessagesList";
+import Messages from "../Messages/Messages";
 import Home from "../Home/Home";
 import { Routes, Route, useLocation } from "react-router-dom";
 import styles from "./Main.module.scss";
@@ -33,7 +33,10 @@ const Main = (props) => {
 				<Container className="py-3">
 					<Routes location={displayLocation}>
 						<Route path="/" element={<Home />} />
-						<Route path="/profile" element={<Profile />} />
+						<Route
+							path="/profile"
+							element={<Profile profile={props.profile} />}
+						/>
 						<Route
 							path="/posts"
 							element={
@@ -47,7 +50,12 @@ const Main = (props) => {
 						<Route
 							path="/messages/*"
 							element={
-								<MessagesList users={props.users} messages={props.messages} />
+								<Messages
+									users={props.users}
+									messages={props.messages}
+									newMessage={props.newMessage}
+									dispatch={props.dispatch}
+								/>
 							}
 						/>
 						<Route path="*" element={<NoMatch />} />
