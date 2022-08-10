@@ -53,6 +53,7 @@ const Main = (props) => {
 									users={props.users}
 									messagesPage={props.messagesPage}
 									dispatch={props.dispatch}
+									profile={props.profile}
 								/>
 							}
 						/>

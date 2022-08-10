@@ -41,6 +41,7 @@ const Messages = (props) => {
 								<SelectedMessagesContainer
 									messages={props.messagesPage.messages}
 									newMessage={props.messagesPage.newMessage}
+									profile={props.profile}
 									setActiveUser={setActiveUser}
 									activeUser={activeUser}
 									dispatch={props.dispatch}

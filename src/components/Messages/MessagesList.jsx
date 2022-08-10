@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
-const Message = (props) => {
+const MessagesList = (props) => {
 	const messagesRender = props.messages.map((message, index) => {
 		const date = new Date(message.timestamp);
 		return (
@@ -23,7 +23,7 @@ const Message = (props) => {
 									: "") + "text-muted "
 							}
 						>
-							{date.toLocaleString(localStorage.getItem("userLocale"))}
+							{date.toLocaleString(props.userLocale)}
 						</Card.Footer>
 					</Card>
 				</Col>
@@ -39,4 +39,4 @@ const Message = (props) => {
 	);
 };
 
-export default Message;
+export default MessagesList;

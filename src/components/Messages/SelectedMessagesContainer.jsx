@@ -9,9 +9,9 @@ import AddMessage from "../AddMessage/AddMessage";
 import MessagesList from "./MessagesList";
 
 const SelectedMessagesContainer = (props) => {
-	let { messages, setActiveUser, activeUser, newMessage } = props;
+	let { messages, setActiveUser, activeUser, newMessage, profile } = props;
 	let targetUserId = parseInt(useParams().userId);
-	const currentUserId = parseInt(localStorage.getItem("currentUserId"));
+	const currentUserId = profile.userId;
 	const [selectedMessages, setSelectedMessages] = useState([]);
 	const [refreshMessages, setRefreshMessages] = useState(false);
 
@@ -64,6 +64,7 @@ const SelectedMessagesContainer = (props) => {
 					messages={selectedMessages}
 					currentUserId={currentUserId}
 					targetUserId={targetUserId}
+					userLocale={profile.userLocale}
 				/>
 				<AddMessage
 					newMessage={newMessage}
