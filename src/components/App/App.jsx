@@ -10,12 +10,10 @@ const App = (props) => {
 			<Header navLinks={props.state.navLinks} />
 			<Main
 				profile={props.state.profile}
-				dialogs={props.state.dialogs}
-				newMessage={props.state.newMessage}
-				posts={props.state.posts}
+				messagesPage={props.state.messagesPage}
+				postsPage={props.state.postsPage}
+				homePage={props.state.homePage}
 				users={props.state.users}
-				messages={props.state.messages}
-				newPost={props.state.newPost}
 				dispatch={props.dispatch}
 			/>
 		</React.Fragment>

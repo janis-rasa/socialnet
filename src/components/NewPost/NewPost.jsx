@@ -5,7 +5,7 @@ import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import {
 	addPostActionCreator,
 	updatePostActionCreator,
-} from "../../redux/state";
+} from "../../redux/posts-reducer";
 
 const NewPost = (props) => {
 	const [show, setShow] = useState(false);

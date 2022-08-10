@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import {
 	addMessageActionCreator,
 	updateMessageActionCreator,
-} from "../../redux/state";
+} from "../../redux/messages-reducer";
 import AddMessage from "../AddMessage/AddMessage";
 import MessagesList from "./MessagesList";
 

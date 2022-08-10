@@ -32,7 +32,7 @@ const Main = (props) => {
 			>
 				<Container className="py-3">
 					<Routes location={displayLocation}>
-						<Route path="/" element={<Home />} />
+						<Route path="/" element={<Home homePage={props.homePage} />} />
 						<Route
 							path="/profile"
 							element={<Profile profile={props.profile} />}
@@ -41,9 +41,8 @@ const Main = (props) => {
 							path="/posts"
 							element={
 								<PostList
-									posts={props.posts}
+									postsPage={props.postsPage}
 									dispatch={props.dispatch}
-									newPost={props.newPost}
 								/>
 							}
 						/>
@@ -52,8 +51,7 @@ const Main = (props) => {
 							element={
 								<Messages
 									users={props.users}
-									messages={props.messages}
-									newMessage={props.newMessage}
+									messagesPage={props.messagesPage}
 									dispatch={props.dispatch}
 								/>
 							}

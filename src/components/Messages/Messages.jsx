@@ -39,11 +39,11 @@ const Messages = (props) => {
 							path=":userId"
 							element={
 								<SelectedMessagesContainer
-									messages={props.messages}
+									messages={props.messagesPage.messages}
+									newMessage={props.messagesPage.newMessage}
 									setActiveUser={setActiveUser}
 									activeUser={activeUser}
 									dispatch={props.dispatch}
-									newMessage={props.newMessage}
 								/>
 							}
 						/>
