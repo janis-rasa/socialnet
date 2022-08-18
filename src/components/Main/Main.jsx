@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import PostList from "../PostList/PostList";
-import Profile from "../Profile/Profile";
-import Messages from "../Messages/Messages";
-import Home from "../Home/Home";
+import PostsContainer from "../Posts/PostsContainer";
 import { Routes, Route, useLocation } from "react-router-dom";
 import styles from "./Main.module.scss";
 import { Container } from "react-bootstrap";
 import NoMatch from "../NoMatch/NoMatch";
+import MessagesContainer from "../Messages/MessagesContainer";
+import HomeContainer from "../Home/HomeContainer";
+import ProfileContainer from "../Profile/ProfileContainer";
 
-const Main = (props) => {
+const Main = () => {
 	const location = useLocation();
 	const [displayLocation, setDisplayLocation] = useState(location);
 	const [transitionStage, setTransitionStage] = useState(styles.fadeIn);
@@ -32,31 +32,10 @@ const Main = (props) => {
 			>
 				<Container className="py-3">
 					<Routes location={displayLocation}>
-						<Route path="/" element={<Home homePage={props.homePage} />} />
-						<Route
-							path="/profile"
-							element={<Profile profile={props.profile} />}
-						/>
-						<Route
-							path="/posts"
-							element={
-								<PostList
-									postsPage={props.postsPage}
-									dispatch={props.dispatch}
-								/>
-							}
-						/>
-						<Route
-							path="/messages/*"
-							element={
-								<Messages
-									users={props.users}
-									messagesPage={props.messagesPage}
-									dispatch={props.dispatch}
-									profile={props.profile}
-								/>
-							}
-						/>
+						<Route path="/" element={<HomeContainer />} />
+						<Route path="/profile" element={<ProfileContainer />} />
+						<Route path="/posts" element={<PostsContainer />} />
+						<Route path="/messages/*" element={<MessagesContainer />} />
 						<Route path="*" element={<NoMatch />} />
 					</Routes>
 				</Container>

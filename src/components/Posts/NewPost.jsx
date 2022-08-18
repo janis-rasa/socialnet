@@ -2,25 +2,19 @@ import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
-import {
-	addPostActionCreator,
-	updatePostActionCreator,
-} from "../../redux/posts-reducer";
 
 const NewPost = (props) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const handleChangePost = (event) => {
-		let postValue = { ...props.newPost };
-		postValue[event.target.name] = event.target.value;
-		props.dispatch(updatePostActionCreator(postValue));
+	const handleOnPostChange = (event) => {
+		props.updatePost(event);
 	};
 
-	const handleSavePost = (event) => {
+	const handleAddPost = (event) => {
 		event.preventDefault();
-		props.dispatch(addPostActionCreator());
+		props.addPost(event);
 		handleClose();
 	};
 
@@ -31,7 +25,7 @@ const NewPost = (props) => {
 				<span className="ms-2">Add new post</span>
 			</Button>
 			<Modal show={show} onHide={handleClose} size="lg">
-				<Form onSubmit={handleSavePost}>
+				<Form onSubmit={handleAddPost}>
 					<Modal.Header closeButton>
 						<Modal.Title>New post</Modal.Title>
 					</Modal.Header>
@@ -41,7 +35,7 @@ const NewPost = (props) => {
 							<Form.Control
 								type="text"
 								required
-								onChange={handleChangePost}
+								onChange={handleOnPostChange}
 								name="postTitle"
 								value={props.newPost.postTitle}
 							/>
@@ -52,7 +46,7 @@ const NewPost = (props) => {
 								as="textarea"
 								rows={5}
 								required
-								onChange={handleChangePost}
+								onChange={handleOnPostChange}
 								name="postText"
 								value={props.newPost.postText}
 							/>

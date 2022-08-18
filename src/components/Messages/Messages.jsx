@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { Row, Col, ListGroup } from "react-bootstrap";
 import { Route, Routes, useLocation } from "react-router-dom";
 import SelectedMessagesContainer from "./SelectedMessagesContainer";
-import UserItem from "../UserItem/UserItem";
+import MessagesNavItem from "./MessagesNavItem";
 
 const Messages = (props) => {
 	const [activeUser, setActiveUser] = useState(0);
 	let location = useLocation().pathname.split("/");
-	const currentUserId = parseInt(localStorage.getItem("currentUserId"));
+
 	if (!location[2] && activeUser) {
 		setActiveUser(0);
 	}
 
 	const userListRender = props.users.flatMap((user, index) => {
-		if (user.userId === currentUserId) {
+		if (user.userId === props.profile.userId) {
 			return [];
 		}
 		return (
-			<UserItem
+			<MessagesNavItem
 				setActiveUser={setActiveUser}
 				user={user}
 				key={"user" + index}
@@ -39,12 +39,8 @@ const Messages = (props) => {
 							path=":userId"
 							element={
 								<SelectedMessagesContainer
-									messages={props.messagesPage.messages}
-									newMessage={props.messagesPage.newMessage}
-									profile={props.profile}
 									setActiveUser={setActiveUser}
 									activeUser={activeUser}
-									dispatch={props.dispatch}
 								/>
 							}
 						/>

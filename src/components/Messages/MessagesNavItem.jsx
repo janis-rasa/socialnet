@@ -2,7 +2,7 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const UserItem = (props) => {
+const MessagesNavItem = (props) => {
 	const handleActiveUser = () => {
 		props.setActiveUser(props.user.userId);
 	};
@@ -20,4 +20,4 @@ const UserItem = (props) => {
 	);
 };
 
-export default UserItem;
+export default MessagesNavItem;

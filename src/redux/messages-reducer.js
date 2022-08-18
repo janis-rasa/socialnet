@@ -104,7 +104,12 @@ const messagesReducer = (state = initialState, action) => {
 				(element) => element.userId === action.userId
 			);
 			if (userIndex >= 0) {
-				state.messages[userIndex].messages = [
+				let stateCopy = {
+					...state,
+					messages: [...state.messages],
+					newMessage: "",
+				};
+				stateCopy.messages[userIndex].messages = [
 					...state.messages[userIndex].messages,
 					{
 						text: state.newMessage,
@@ -112,15 +117,14 @@ const messagesReducer = (state = initialState, action) => {
 						timestamp: Date.now(),
 					},
 				];
-				state.newMessage = "";
+				return stateCopy;
 			}
-			break;
+			return state;
 		case UPDATE_MESSAGE:
-			state.newMessage = action.text;
-			break;
+			return { ...state, newMessage: action.text };
 		default:
+			return state;
 	}
-	return state;
 };
 
 export const addMessageActionCreator = (targetUserId, currentUserId) => ({
