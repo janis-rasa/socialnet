@@ -100,26 +100,23 @@ let initialState = {
 const messagesReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_MESSAGE:
-			const userIndex = state.messages.findIndex(
-				(element) => element.userId === action.userId
-			);
-			if (userIndex >= 0) {
-				let stateCopy = {
-					...state,
-					messages: [...state.messages],
-					newMessage: "",
-				};
-				stateCopy.messages[userIndex].messages = [
-					...state.messages[userIndex].messages,
-					{
-						text: state.newMessage,
-						targetUserId: action.targetUserId,
-						timestamp: Date.now(),
-					},
-				];
-				return stateCopy;
-			}
-			return state;
+			return {
+				...state,
+				messages: state.messages.map((element) => {
+					if (element.userId === action.userId) {
+						element.messages = [
+							...element.messages,
+							{
+								text: state.newMessage,
+								targetUserId: action.targetUserId,
+								timestamp: Date.now(),
+							},
+						];
+					}
+					return element;
+				}),
+				newMessage: "",
+			};
 		case UPDATE_MESSAGE:
 			return { ...state, newMessage: action.text };
 		default:
@@ -127,13 +124,13 @@ const messagesReducer = (state = initialState, action) => {
 	}
 };
 
-export const addMessageActionCreator = (targetUserId, currentUserId) => ({
+export const addMessageAC = (targetUserId, currentUserId) => ({
 	type: ADD_MESSAGE,
 	targetUserId: targetUserId,
 	userId: currentUserId,
 });
 
-export const updateMessageActionCreator = (text) => ({
+export const updateMessageAC = (text) => ({
 	type: UPDATE_MESSAGE,
 	text: text,
 });

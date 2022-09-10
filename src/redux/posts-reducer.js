@@ -45,9 +45,9 @@ const postsReducer = (state = initialState, action) => {
 	}
 };
 
-export const addPostActionCreator = () => ({ type: ADD_POST });
+export const addPostAC = () => ({ type: ADD_POST });
 
-export const updatePostActionCreator = (postValue) => ({
+export const updatePostAC = (postValue) => ({
 	type: UPDATE_POST,
 	postValue: postValue,
 });

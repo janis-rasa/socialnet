@@ -9,7 +9,6 @@ const SelectedMessages = (props) => {
 	let targetUserId = parseInt(useParams().userId);
 	const currentUserId = profile.userId;
 	const [selectedMessages, setSelectedMessages] = useState([]);
-	const [refreshMessages, setRefreshMessages] = useState(false);
 
 	useEffect(() => {
 		if (targetUserId) {
@@ -28,25 +27,16 @@ const SelectedMessages = (props) => {
 					flattedMessages = [...flattedMessages, ...filteredMessages];
 				});
 				flattedMessages.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
-				setRefreshMessages(false);
 				setSelectedMessages(flattedMessages);
 			}
 			if (!activeUser) {
 				setActiveUser(targetUserId);
 			}
 		}
-	}, [
-		targetUserId,
-		messages,
-		setActiveUser,
-		activeUser,
-		currentUserId,
-		refreshMessages,
-	]);
+	}, [targetUserId, messages, setActiveUser, activeUser, currentUserId]);
 
 	const addMessage = () => {
 		props.addMessage(targetUserId, currentUserId);
-		setRefreshMessages(true);
 	};
 
 	if (Object.keys(selectedMessages).length !== 0) {

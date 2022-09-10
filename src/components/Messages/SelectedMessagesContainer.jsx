@@ -1,8 +1,5 @@
 import { connect } from "react-redux";
-import {
-	addMessageActionCreator,
-	updateMessageActionCreator,
-} from "../../redux/messages-reducer";
+import { addMessageAC, updateMessageAC } from "../../redux/messages-reducer";
 import SelectedMessages from "./SelectedMessages";
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,10 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		addMessage: (targetUserId, currentUserId) => {
-			dispatch(addMessageActionCreator(targetUserId, currentUserId));
+			dispatch(addMessageAC(targetUserId, currentUserId));
 		},
 		updateMessage: (text) => {
-			dispatch(updateMessageActionCreator(text));
+			dispatch(updateMessageAC(text));
 		},
 		setActiveUser: ownProps.setActiveUser,
 	};

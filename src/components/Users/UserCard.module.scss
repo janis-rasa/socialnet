@@ -1,0 +1,17 @@
+.image {
+	width: 30%;
+	max-width: 30%;
+}
+
+.body {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.title {
+	width: 70%;
+	max-width: 70%;
+	margin-left: 1rem;
+	font-size: 1rem;
+}

@@ -7,6 +7,7 @@ import NoMatch from "../NoMatch/NoMatch";
 import MessagesContainer from "../Messages/MessagesContainer";
 import HomeContainer from "../Home/HomeContainer";
 import ProfileContainer from "../Profile/ProfileContainer";
+import UsersContainer from "../Users/UsersContainer";
 
 const Main = () => {
 	const location = useLocation();
@@ -36,6 +37,7 @@ const Main = () => {
 						<Route path="/profile" element={<ProfileContainer />} />
 						<Route path="/posts" element={<PostsContainer />} />
 						<Route path="/messages/*" element={<MessagesContainer />} />
+						<Route path="/users/*" element={<UsersContainer />} />
 						<Route path="*" element={<NoMatch />} />
 					</Routes>
 				</Container>

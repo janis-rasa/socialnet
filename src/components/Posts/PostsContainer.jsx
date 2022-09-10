@@ -1,8 +1,5 @@
 import { connect } from "react-redux";
-import {
-	addPostActionCreator,
-	updatePostActionCreator,
-} from "../../redux/posts-reducer";
+import { addPostAC, updatePostAC } from "../../redux/posts-reducer";
 import PostList from "./PostList";
 
 const mapStateToProps = (state) => {
@@ -15,11 +12,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addPost: () => {
-			dispatch(addPostActionCreator());
+			dispatch(addPostAC());
 		},
 		updatePost: (event) => {
 			let postValue = { [event.target.name]: event.target.value };
-			dispatch(updatePostActionCreator(postValue));
+			dispatch(updatePostAC(postValue));
 		},
 	};
 };
