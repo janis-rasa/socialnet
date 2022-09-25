@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import AddMessage from "./AddMessage";
 import MessagesList from "./MessagesList";
 
 const SelectedMessages = (props) => {
-	let { messages, newMessage, profile, activeUser, setActiveUser } = props;
-	let targetUserId = parseInt(useParams().userId);
+	let {
+		messages,
+		newMessage,
+		profile,
+		activeUser,
+		setActiveUser,
+		targetUserId,
+	} = props;
+
 	const currentUserId = profile.userId;
 	const [selectedMessages, setSelectedMessages] = useState([]);
 
 	useEffect(() => {
 		if (targetUserId) {
-			const allMessages = messages.filter(
-				(element) =>
+			let allMessages = messages.filter((element) => {
+				return (
 					element.userId === targetUserId || element.userId === currentUserId
-			);
+				);
+			});
 			if (allMessages.length > 0) {
 				let flattedMessages = [];
 				allMessages.forEach((element) => {

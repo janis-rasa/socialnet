@@ -1,27 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, ListGroup } from "react-bootstrap";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SelectedMessagesContainer from "./SelectedMessagesContainer";
 import MessagesNavItem from "./MessagesNavItem";
 
 const Messages = (props) => {
-	const [activeUser, setActiveUser] = useState(0);
-	let location = useLocation().pathname.split("/");
-
-	if (!location[2] && activeUser) {
-		setActiveUser(0);
-	}
-
 	const userListRender = props.users.flatMap((user, index) => {
 		if (user.userId === props.profile.userId) {
 			return [];
 		}
 		return (
 			<MessagesNavItem
-				setActiveUser={setActiveUser}
+				setActiveUser={props.setActiveUser}
 				user={user}
 				key={"user" + index}
-				activeUser={activeUser}
+				activeUser={props.activeUser}
 			/>
 		);
 	});
@@ -39,8 +32,8 @@ const Messages = (props) => {
 							path=":userId"
 							element={
 								<SelectedMessagesContainer
-									setActiveUser={setActiveUser}
-									activeUser={activeUser}
+									setActiveUser={props.setActiveUser}
+									activeUser={props.activeUser}
 								/>
 							}
 						/>

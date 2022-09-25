@@ -1,6 +1,24 @@
+import React from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { addMessageAC, updateMessageAC } from "../../redux/messages-reducer";
 import SelectedMessages from "./SelectedMessages";
+
+const SelectedMessagesContainer = (props) => {
+	let targetUserId = parseInt(useParams().userId);
+	return (
+		<SelectedMessages
+			messages={props.messages}
+			newMessage={props.newMessage}
+			profile={props.profile}
+			activeUser={props.activeUser}
+			addMessage={props.addMessage}
+			updateMessage={props.updateMessage}
+			setActiveUser={props.setActiveUser}
+			targetUserId={targetUserId}
+		/>
+	);
+};
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -23,9 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	};
 };
 
-const SelectedMessagesContainer = connect(
+export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(SelectedMessages);
-
-export default SelectedMessagesContainer;
+)(SelectedMessagesContainer);

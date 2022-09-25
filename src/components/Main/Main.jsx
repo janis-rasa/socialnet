@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import PostsContainer from "../Posts/PostsContainer";
 import { Routes, Route, useLocation } from "react-router-dom";
 import styles from "./Main.module.scss";
 import { Container } from "react-bootstrap";
+import PostsContainer from "../Posts/PostsContainer";
 import NoMatch from "../NoMatch/NoMatch";
 import MessagesContainer from "../Messages/MessagesContainer";
 import HomeContainer from "../Home/HomeContainer";
@@ -31,7 +31,7 @@ const Main = () => {
 					}
 				}}
 			>
-				<Container className="py-3">
+				<Container className="py-5">
 					<Routes location={displayLocation}>
 						<Route path="/" element={<HomeContainer />} />
 						<Route path="/profile" element={<ProfileContainer />} />
