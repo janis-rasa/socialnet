@@ -4,6 +4,7 @@ import Home from "./Home";
 let mapStateToProps = (state) => {
 	return {
 		homePage: state.homePage,
+		profile: state.profile.profile,
 	};
 };
 

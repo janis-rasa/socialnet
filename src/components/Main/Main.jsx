@@ -4,7 +4,6 @@ import styles from "./Main.module.scss";
 import { Container } from "react-bootstrap";
 import PostsContainer from "../Posts/PostsContainer";
 import NoMatch from "../NoMatch/NoMatch";
-import MessagesContainer from "../Messages/MessagesContainer";
 import HomeContainer from "../Home/HomeContainer";
 import ProfileContainer from "../Profile/ProfileContainer";
 import UsersContainer from "../Users/UsersContainer";
@@ -36,8 +35,11 @@ const Main = () => {
 						<Route path="/" element={<HomeContainer />} />
 						<Route path="/profile" element={<ProfileContainer />} />
 						<Route path="/posts" element={<PostsContainer />} />
-						<Route path="/messages/*" element={<MessagesContainer />} />
-						<Route path="/users/*" element={<UsersContainer />} />
+						<Route
+							path="/messages/*"
+							element={<UsersContainer child="messages" />}
+						/>
+						<Route path="/users/*" element={<UsersContainer child="users" />} />
 						<Route path="*" element={<NoMatch />} />
 					</Routes>
 				</Container>

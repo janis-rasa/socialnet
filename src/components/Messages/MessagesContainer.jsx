@@ -1,45 +1,87 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { setUsersAc } from "../../redux/users-reducer";
+import { fetchUserMessages } from "../../api/messages";
+import { setMessagesAC } from "../../redux/messages-reducer";
 import Messages from "./Messages";
 
 const MessagesContainer = (props) => {
-	let { users, setUsers, profile } = props;
-	const [activeUser, setActiveUser] = useState(0);
+	let {
+		users,
+		profile,
+		activePage,
+		total,
+		setActivePage,
+		pageLimit,
+		correspondence,
+		totalPages,
+		setMessages,
+	} = props;
+	const [targetUserId, setTargetUserId] = React.useState(0);
+	const [targetUserFullName, setTargetUserFullName] = React.useState("");
 	let location = useLocation().pathname.split("/");
 
-	React.useEffect(() => {
-		if (!users.length) {
-			fetch("http://localhost:5000/users")
-				.then((response) => response.json())
-				.then((users) => setUsers(users));
-		}
-		if (!location[2] && activeUser) {
-			setActiveUser(0);
-		}
-	}, [users, setUsers, location, setActiveUser, activeUser]);
+	const getMessages = React.useCallback(
+		(userId) => {
+			fetchUserMessages(userId).then((response) =>
+				setMessages(response[0].correspondence)
+			);
+		},
+		[setMessages]
+	);
 
-	if (users.length) {
+	React.useEffect(() => {
+		if (!correspondence.length) {
+			getMessages(profile.userId);
+		}
+		if (!location[2] && targetUserId) {
+			setTargetUserId(0);
+		}
+	}, [
+		location,
+		profile,
+		correspondence,
+		getMessages,
+		setTargetUserId,
+		targetUserId,
+	]);
+
+	if (correspondence.length) {
 		return (
 			<Messages
 				users={users}
 				profile={profile}
-				activeUser={activeUser}
-				setActiveUser={setActiveUser}
+				activePage={activePage}
+				total={total}
+				setActivePage={setActivePage}
+				pageLimit={pageLimit}
+				totalPages={totalPages}
+				targetUserId={targetUserId}
+				setTargetUserId={setTargetUserId}
+				setTargetUserFullName={setTargetUserFullName}
+				targetUserFullName={targetUserFullName}
 			/>
 		);
 	}
 };
-const mapStateToProps = (state) => ({
-	profile: state.profile,
-	users: state.users,
-});
 
-const mapDispatchToProps = (dispatch) => ({
-	setUsers: (users) => {
-		dispatch(setUsersAc(users));
-	},
-});
+const mapStateToProps = (state, ownProps) => {
+	return {
+		users: ownProps.users,
+		profile: ownProps.profile,
+		activePage: ownProps.activePage,
+		total: ownProps.total,
+		setActivePage: ownProps.setActivePage,
+		pageLimit: ownProps.pageLimit,
+		totalPages: ownProps.totalPages,
+		correspondence: state.messagesPage.correspondence,
+	};
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		setMessages: (correspondence) => dispatch(setMessagesAC(correspondence)),
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);

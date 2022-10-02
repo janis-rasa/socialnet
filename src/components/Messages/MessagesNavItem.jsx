@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 
 const MessagesNavItem = (props) => {
 	const handleActiveUser = () => {
-		props.setActiveUser(props.user.userId);
+		props.setTargetUserId(props.user.userId);
+		props.setTargetUserFullName(
+			props.user.firstName + " " + props.user.lastName
+		);
 	};
 
 	return (
-		<ListGroup.Item as="li" active={props.user.userId === props.activeUser}>
+		<ListGroup.Item as="li" active={props.user.userId === props.targetUserId}>
 			<Link
-				to={props.user.userId.toString()}
+				to={props.user.userName}
 				onClick={handleActiveUser}
 				className="nav-link"
 			>

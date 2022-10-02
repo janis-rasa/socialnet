@@ -3,18 +3,20 @@ import { Row, Col, ListGroup } from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
 import SelectedMessagesContainer from "./SelectedMessagesContainer";
 import MessagesNavItem from "./MessagesNavItem";
+import CommonPagination from "../Reusable/CommonPagination";
 
 const Messages = (props) => {
 	const userListRender = props.users.flatMap((user, index) => {
-		if (user.userId === props.profile.userId) {
+		if (user.userName === props.profile.userName) {
 			return [];
 		}
 		return (
 			<MessagesNavItem
-				setActiveUser={props.setActiveUser}
+				setTargetUserId={props.setTargetUserId}
+				setTargetUserFullName={props.setTargetUserFullName}
 				user={user}
 				key={"user" + index}
-				activeUser={props.activeUser}
+				targetUserId={props.targetUserId}
 			/>
 		);
 	});
@@ -25,15 +27,23 @@ const Messages = (props) => {
 			<Row>
 				<Col sm={4} xl={3} xxl={2}>
 					<ListGroup as="ul">{userListRender}</ListGroup>
+					<div className="d-flex justify-content-center pt-3">
+						<CommonPagination
+							setActivePage={props.setActivePage}
+							totalPages={props.totalPages}
+							activePage={props.activePage}
+						/>
+					</div>
 				</Col>
 				<Col sm={8} xl={9} xxl={10}>
 					<Routes>
 						<Route
-							path=":userId"
+							path=":userName"
 							element={
 								<SelectedMessagesContainer
-									setActiveUser={props.setActiveUser}
-									activeUser={props.activeUser}
+									setTargetUserId={props.setTargetUserId}
+									targetUserId={props.targetUserId}
+									targetUserFullName={props.targetUserFullName}
 								/>
 							}
 						/>

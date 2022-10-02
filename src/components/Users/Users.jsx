@@ -1,27 +1,9 @@
 import React from "react";
-import { Row, Pagination } from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import CommonPagination from "../Reusable/CommonPagination";
 import UserCard from "./UserCard";
 
 const Users = (props) => {
-	let totalPages = Array.from(
-		{ length: Math.ceil(props.total / props.pageLimit) },
-		(v, i) => ++i
-	);
-
-	const setPage = (event) => {
-		props.setActivePage(Number(event.target.textContent));
-	};
-
-	const renderPagination = totalPages.map((number) => (
-		<Pagination.Item
-			key={"pagination" + number}
-			active={number === props.activePage}
-			onClick={setPage}
-		>
-			{number}
-		</Pagination.Item>
-	));
-
 	if (props.users.length) {
 		const userCardRender = props.users.map((user, index) => {
 			return <UserCard user={user} key={"user" + index} />;
@@ -33,7 +15,11 @@ const Users = (props) => {
 					{userCardRender}
 				</Row>
 				<div className="d-flex justify-content-center pt-5">
-					<Pagination>{renderPagination}</Pagination>
+					<CommonPagination
+						setActivePage={props.setActivePage}
+						totalPages={props.totalPages}
+						activePage={props.activePage}
+					/>
 				</div>
 			</React.Fragment>
 		);

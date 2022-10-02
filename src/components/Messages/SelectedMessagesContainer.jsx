@@ -1,43 +1,68 @@
 import React from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
 import { addMessageAC, updateMessageAC } from "../../redux/messages-reducer";
 import SelectedMessages from "./SelectedMessages";
 
 const SelectedMessagesContainer = (props) => {
-	let targetUserId = parseInt(useParams().userId);
-	return (
-		<SelectedMessages
-			messages={props.messages}
-			newMessage={props.newMessage}
-			profile={props.profile}
-			activeUser={props.activeUser}
-			addMessage={props.addMessage}
-			updateMessage={props.updateMessage}
-			setActiveUser={props.setActiveUser}
-			targetUserId={targetUserId}
-		/>
-	);
+	let {
+		profile,
+		correspondence,
+		newMessage,
+		updateMessage,
+		targetUserId,
+		targetUserFullName,
+	} = props;
+	const [selectedMessages, setSelectedMessages] = React.useState([]);
+	const currentUserId = profile.userId;
+	const addMessage = () => {
+		props.addMessage(targetUserId, currentUserId);
+	};
+
+	React.useEffect(() => {
+		if (targetUserId) {
+			const messages = correspondence.find(
+				(element) => element.targetUserId === targetUserId
+			).messages;
+			if (messages.length > 0) {
+				setSelectedMessages(messages);
+			}
+		}
+	}, [targetUserId, correspondence, currentUserId]);
+
+	if (selectedMessages.length) {
+		return (
+			<SelectedMessages
+				selectedMessages={selectedMessages}
+				newMessage={newMessage}
+				profile={profile}
+				addMessage={addMessage}
+				updateMessage={updateMessage}
+				targetUserId={targetUserId}
+				targetUserFullName={targetUserFullName}
+			/>
+		);
+	} else {
+		return <Alert variant="warning">Sorry, no messages</Alert>;
+	}
 };
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		messages: state.messagesPage.messages,
+		correspondence: state.messagesPage.correspondence,
 		newMessage: state.messagesPage.newMessage,
 		profile: state.profile,
-		activeUser: ownProps.activeUser,
+		targetUserId: ownProps.targetUserId,
+		targetUserFullName: ownProps.targetUserFullName,
 	};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		addMessage: (targetUserId, currentUserId) => {
-			dispatch(addMessageAC(targetUserId, currentUserId));
-		},
-		updateMessage: (text) => {
-			dispatch(updateMessageAC(text));
-		},
-		setActiveUser: ownProps.setActiveUser,
+		addMessage: (targetUserName, currentUserName) =>
+			dispatch(addMessageAC(targetUserName, currentUserName)),
+		updateMessage: (text) => dispatch(updateMessageAC(text)),
+		setTargetUserId: ownProps.setTargetUserId,
 	};
 };
 

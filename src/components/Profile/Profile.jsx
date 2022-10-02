@@ -7,7 +7,7 @@ const Profile = (props) => {
 	return (
 		<Figure className="row">
 			<Col xxs={3} lg={2}>
-				<Image thumbnail alt="user avatar" src={profile.image} />
+				<Image thumbnail alt="user avatar" src={profile.avatarUrl} />
 			</Col>
 			<Figure.Caption className="col-9 col-lg-10">
 				<h1 className="header-underscore fs-4">
@@ -16,12 +16,12 @@ const Profile = (props) => {
 				<Table striped>
 					<tbody>
 						<tr>
-							<th>email:</th>
+							<th>Email:</th>
 							<td className="ps-2">{profile.email}</td>
 						</tr>
 						<tr>
-							<th>info:</th>
-							<td className="ps-2">{profile.info}</td>
+							<th>User name:</th>
+							<td className="ps-2">{profile.userName}</td>
 						</tr>
 					</tbody>
 				</Table>

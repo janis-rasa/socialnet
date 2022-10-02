@@ -2,14 +2,12 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
 const MessagesList = (props) => {
-	const messagesRender = props.messages.map((message, index) => {
+	const messagesRender = props.selectedMessages.map((message, index) => {
 		const date = new Date(message.timestamp);
 		return (
 			<Row
 				key={"message" + index}
-				className={
-					message.targetUserId !== props.currentUserId && "justify-content-end"
-				}
+				className={message.isOwn && "justify-content-end"}
 			>
 				<Col xs="11" lg="9">
 					<Card className="mb-3">
@@ -17,11 +15,7 @@ const MessagesList = (props) => {
 							<Card.Text>{message.text}</Card.Text>
 						</Card.Body>
 						<Card.Footer
-							className={
-								(message.targetUserId !== props.currentUserId
-									? "text-end "
-									: "") + "text-muted "
-							}
+							className={(message.isOwn && "text-end ") + "text-muted "}
 						>
 							{date.toLocaleString(props.userLocale)}
 						</Card.Footer>
@@ -33,7 +27,7 @@ const MessagesList = (props) => {
 
 	return (
 		<React.Fragment>
-			<h2 className="fs-4">Chat with user {props.targetUserId}</h2>
+			<h2 className="fs-4">Chat with user {props.targetUserFullName}</h2>
 			{messagesRender}
 		</React.Fragment>
 	);

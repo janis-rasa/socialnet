@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { setUsersAc, setActivePageAc } from "../../redux/users-reducer";
 import Users from "./Users";
+import { fetchUsers } from "../../api/users";
+import MessagesContainer from "../Messages/MessagesContainer";
 
 const UsersContainer = (props) => {
 	let {
@@ -12,17 +14,16 @@ const UsersContainer = (props) => {
 		activePage,
 		setActivePage,
 		pageLimit,
+		child,
 	} = props;
 
 	let [prevPage, setPrevPage] = React.useState(activePage);
 
 	const getUsers = React.useCallback(
 		(page, limit) => {
-			fetch("http://localhost:5000/users?_page=" + page + "&_limit=" + limit)
-				.then((response) =>
-					Promise.all([response.json(), response.headers.get("x-total-count")])
-				)
-				.then((values) => setUsers(values[0], Number(values[1])));
+			fetchUsers(page, limit).then((values) =>
+				setUsers(values[0], Number(values[1]))
+			);
 		},
 		[setUsers]
 	);
@@ -34,17 +35,39 @@ const UsersContainer = (props) => {
 		}
 	}, [users, activePage, pageLimit, prevPage, getUsers]);
 
+	const totalPages = Array.from(
+		{ length: Math.ceil(total / pageLimit) },
+		(v, i) => ++i
+	);
+
 	if (users.length) {
-		return (
-			<Users
-				users={users}
-				profile={profile}
-				activePage={activePage}
-				total={total}
-				setActivePage={setActivePage}
-				pageLimit={pageLimit}
-			/>
-		);
+		switch (child) {
+			case "users":
+				return (
+					<Users
+						users={users}
+						profile={profile}
+						activePage={activePage}
+						total={total}
+						setActivePage={setActivePage}
+						pageLimit={pageLimit}
+						totalPages={totalPages}
+					/>
+				);
+			case "messages":
+				return (
+					<MessagesContainer
+						users={users}
+						profile={profile}
+						activePage={activePage}
+						total={total}
+						setActivePage={setActivePage}
+						pageLimit={pageLimit}
+						totalPages={totalPages}
+					/>
+				);
+			default:
+		}
 	}
 };
 
@@ -54,7 +77,7 @@ const mapStateToProps = (state) => {
 		total: state.users.total,
 		activePage: state.users.activePage,
 		pageLimit: state.users.pageLimit,
-		profile: state.profile,
+		profile: state.profile.profile,
 	};
 };
 

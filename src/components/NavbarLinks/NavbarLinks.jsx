@@ -6,11 +6,7 @@ import LinkContainer from "react-router-bootstrap/LinkContainer";
 const NavbarLinks = (props) => {
 	const linksRender = props.links.map((link, index) => (
 		<LinkContainer to={link.link} key={"navbarLinks" + index}>
-			<Nav.Link
-				className={styles.link}
-				eventKey={"link-" + index}
-				{...({ isActive }) => (isActive ? 'aria-current="page"' : "")}
-			>
+			<Nav.Link className={styles.link} eventKey={"navLink-" + index}>
 				{link.linkTitle}
 			</Nav.Link>
 		</LinkContainer>

@@ -3,7 +3,7 @@ import Profile from "./Profile";
 
 let mapStateToProps = (state) => {
 	return {
-		profile: state.profile,
+		profile: state.profile.profile,
 	};
 };
 
