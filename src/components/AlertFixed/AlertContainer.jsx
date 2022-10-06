@@ -1,6 +1,6 @@
+import React from "react"
 import AlertFixed from "./AlertFixed"
 import { setAlert } from "../../redux/alert-reducer"
-import React from "react"
 import { connect } from "react-redux"
 
 const AlertContainer = (props) => {
