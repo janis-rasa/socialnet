@@ -1,14 +1,14 @@
-import React from "react";
-import { Row, Col, ListGroup } from "react-bootstrap";
-import { Route, Routes } from "react-router-dom";
-import SelectedMessagesContainer from "./SelectedMessagesContainer";
-import MessagesNavItem from "./MessagesNavItem";
-import CommonPagination from "../Reusable/CommonPagination";
+import React from "react"
+import { Row, Col, ListGroup } from "react-bootstrap"
+import { Route, Routes } from "react-router-dom"
+import SelectedMessagesContainer from "./SelectedMessagesContainer"
+import MessagesNavItem from "./MessagesNavItem"
+import CommonPagination from "../Reusable/CommonPagination"
 
 const Messages = (props) => {
 	const userListRender = props.users.flatMap((user, index) => {
 		if (user.userName === props.profile.userName) {
-			return [];
+			return []
 		}
 		return (
 			<MessagesNavItem
@@ -18,16 +18,16 @@ const Messages = (props) => {
 				key={"user" + index}
 				targetUserId={props.targetUserId}
 			/>
-		);
-	});
+		)
+	})
 
 	return (
 		<React.Fragment>
-			<h1 className="visually-hidden">Messages</h1>
+			<h1 className='visually-hidden'>Messages</h1>
 			<Row>
 				<Col sm={4} xl={3} xxl={2}>
-					<ListGroup as="ul">{userListRender}</ListGroup>
-					<div className="d-flex justify-content-center pt-3">
+					<ListGroup as='ul'>{userListRender}</ListGroup>
+					<div className='d-flex justify-content-center pt-3'>
 						<CommonPagination
 							setActivePage={props.setActivePage}
 							totalPages={props.totalPages}
@@ -38,7 +38,7 @@ const Messages = (props) => {
 				<Col sm={8} xl={9} xxl={10}>
 					<Routes>
 						<Route
-							path=":userName"
+							path=':userName'
 							element={
 								<SelectedMessagesContainer
 									setTargetUserId={props.setTargetUserId}
@@ -51,7 +51,7 @@ const Messages = (props) => {
 				</Col>
 			</Row>
 		</React.Fragment>
-	);
-};
+	)
+}
 
-export default Messages;
+export default Messages

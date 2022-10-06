@@ -1,12 +1,19 @@
 import React from "react"
-import { Alert } from "react-bootstrap"
 import { connect } from "react-redux"
+import { setAlert } from "../../redux/alert-reducer"
 import { addMessage, updateMessage } from "../../redux/messages-reducer"
 import SelectedMessages from "./SelectedMessages"
 
 const SelectedMessagesContainer = (props) => {
-	let { profile, correspondence, newMessage, updateMessage, targetUserId, targetUserFullName } =
-		props
+	let {
+		profile,
+		correspondence,
+		newMessage,
+		updateMessage,
+		targetUserId,
+		targetUserFullName,
+		setAlert,
+	} = props
 	const [selectedMessages, setSelectedMessages] = React.useState([])
 	const addMessage = () => {
 		props.addMessage(targetUserId)
@@ -14,17 +21,15 @@ const SelectedMessagesContainer = (props) => {
 
 	React.useEffect(() => {
 		if (targetUserId) {
-			const messages = correspondence.find(
-				(element) => element.targetUserId === targetUserId
-			).messages
-			if (messages.length > 0) {
-				setSelectedMessages(messages)
+			const messages = correspondence.find((element) => element.targetUserId === targetUserId)
+			if (messages && Object.keys(messages).length > 0) {
+				setSelectedMessages(messages.messages)
 			}
 		}
-	}, [targetUserId, correspondence, profile.userId])
+	}, [targetUserId, correspondence, setSelectedMessages])
 
-	if (selectedMessages.length) {
-		return (
+	return (
+		!!selectedMessages.length && (
 			<SelectedMessages
 				selectedMessages={selectedMessages}
 				newMessage={newMessage}
@@ -33,11 +38,10 @@ const SelectedMessagesContainer = (props) => {
 				updateMessage={updateMessage}
 				targetUserId={targetUserId}
 				targetUserFullName={targetUserFullName}
+				setAlert={setAlert}
 			/>
 		)
-	} else {
-		return <Alert variant='warning'>Sorry, no messages</Alert>
-	}
+	)
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -50,14 +54,13 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		addMessage,
-		updateMessage,
-		setTargetUserId: ownProps.setTargetUserId,
-	}
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	setTargetUserId: ownProps.setTargetUserId,
+})
 
-export default connect(mapStateToProps, { addMessage, updateMessage, mapDispatchToProps })(
-	SelectedMessagesContainer
-)
+export default connect(mapStateToProps, {
+	addMessage,
+	updateMessage,
+	setAlert,
+	...mapDispatchToProps,
+})(SelectedMessagesContainer)

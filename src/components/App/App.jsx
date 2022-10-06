@@ -4,13 +4,14 @@ import Main from "../Main/Main"
 import { setProfile } from "../../redux/profile-reducer"
 import { connect } from "react-redux"
 import { fetchUser } from "../../api/users"
+import AlertContainer from "../AlertFixed/AlertContainer"
 
 const App = (props) => {
 	let { profile, activeUserId, setProfile } = props
 
 	const getUser = React.useCallback(
 		(userId) => {
-			fetchUser(userId).then((response) => setProfile(response[0]))
+			fetchUser(userId).then((response) => setProfile(response))
 		},
 		[setProfile]
 	)
@@ -21,14 +22,15 @@ const App = (props) => {
 		}
 	}, [activeUserId, profile, getUser])
 
-	if (Object.keys(profile).length !== 0) {
-		return (
+	return (
+		!!Object.keys(profile).length && (
 			<React.Fragment>
+				<AlertContainer />
 				<HeaderContainer />
 				<Main />
 			</React.Fragment>
 		)
-	}
+	)
 }
 
 const mapStateToProps = (state) => {
