@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { fetchUserMessages } from "../../api/messages";
-import { setMessagesAC } from "../../redux/messages-reducer";
-import Messages from "./Messages";
+import React from "react"
+import { connect } from "react-redux"
+import { useLocation } from "react-router-dom"
+import { fetchUserMessages } from "../../api/messages"
+import { setMessages } from "../../redux/messages-reducer"
+import Messages from "./Messages"
 
 const MessagesContainer = (props) => {
 	let {
@@ -16,35 +16,26 @@ const MessagesContainer = (props) => {
 		correspondence,
 		totalPages,
 		setMessages,
-	} = props;
-	const [targetUserId, setTargetUserId] = React.useState(0);
-	const [targetUserFullName, setTargetUserFullName] = React.useState("");
-	let location = useLocation().pathname.split("/");
+	} = props
+	const [targetUserId, setTargetUserId] = React.useState(0)
+	const [targetUserFullName, setTargetUserFullName] = React.useState("")
+	let location = useLocation().pathname.split("/")
 
 	const getMessages = React.useCallback(
 		(userId) => {
-			fetchUserMessages(userId).then((response) =>
-				setMessages(response[0].correspondence)
-			);
+			fetchUserMessages(userId).then((response) => setMessages(response[0].correspondence))
 		},
 		[setMessages]
-	);
+	)
 
 	React.useEffect(() => {
 		if (!correspondence.length) {
-			getMessages(profile.userId);
+			getMessages(profile.userId)
 		}
 		if (!location[2] && targetUserId) {
-			setTargetUserId(0);
+			setTargetUserId(0)
 		}
-	}, [
-		location,
-		profile,
-		correspondence,
-		getMessages,
-		setTargetUserId,
-		targetUserId,
-	]);
+	}, [location, profile, correspondence, getMessages, setTargetUserId, targetUserId])
 
 	if (correspondence.length) {
 		return (
@@ -61,9 +52,9 @@ const MessagesContainer = (props) => {
 				setTargetUserFullName={setTargetUserFullName}
 				targetUserFullName={targetUserFullName}
 			/>
-		);
+		)
 	}
-};
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -75,13 +66,7 @@ const mapStateToProps = (state, ownProps) => {
 		pageLimit: ownProps.pageLimit,
 		totalPages: ownProps.totalPages,
 		correspondence: state.messagesPage.correspondence,
-	};
-};
+	}
+}
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		setMessages: (correspondence) => dispatch(setMessagesAC(correspondence)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);
+export default connect(mapStateToProps, { setMessages })(MessagesContainer)

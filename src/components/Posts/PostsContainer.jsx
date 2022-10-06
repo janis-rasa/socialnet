@@ -1,26 +1,36 @@
-import { connect } from "react-redux";
-import { addPostAC, updatePostAC } from "../../redux/posts-reducer";
-import PostList from "./PostList";
+import React from "react"
+import { connect } from "react-redux"
+import { fetchPosts } from "../../api/posts"
+import { addPost, updatePost, setPosts } from "../../redux/posts-reducer"
+import PostList from "./PostList"
+
+const PostsContainer = (props) => {
+	let { newPost, posts, userId, setPosts, updatePost, addPost } = props
+
+	const getPosts = React.useCallback(
+		(id) => {
+			fetchPosts(id).then((response) => setPosts(response))
+		},
+		[setPosts]
+	)
+
+	React.useEffect(() => {
+		if (!posts.length) {
+			getPosts(userId)
+		}
+	}, [posts, userId, getPosts])
+
+	if (posts.length) {
+		return <PostList newPost={newPost} posts={posts} addPost={addPost} updatePost={updatePost} />
+	}
+}
 
 const mapStateToProps = (state) => {
 	return {
 		newPost: state.postsPage.newPost,
 		posts: state.postsPage.posts,
-	};
-};
+		userId: state.profile.activeUserId,
+	}
+}
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		addPost: () => {
-			dispatch(addPostAC());
-		},
-		updatePost: (event) => {
-			let postValue = { [event.target.name]: event.target.value };
-			dispatch(updatePostAC(postValue));
-		},
-	};
-};
-
-const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(PostList);
-
-export default PostsContainer;
+export default connect(mapStateToProps, { addPost, updatePost, setPosts })(PostsContainer)

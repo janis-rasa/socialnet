@@ -1,44 +1,30 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setUsersAc, setActivePageAc } from "../../redux/users-reducer";
-import Users from "./Users";
-import { fetchUsers } from "../../api/users";
-import MessagesContainer from "../Messages/MessagesContainer";
+import React from "react"
+import { connect } from "react-redux"
+import { setUsers, setActivePage } from "../../redux/users-reducer"
+import Users from "./Users"
+import { fetchUsers } from "../../api/users"
+import MessagesContainer from "../Messages/MessagesContainer"
 
 const UsersContainer = (props) => {
-	let {
-		users,
-		setUsers,
-		total,
-		profile,
-		activePage,
-		setActivePage,
-		pageLimit,
-		child,
-	} = props;
+	let { users, setUsers, total, profile, activePage, setActivePage, pageLimit, child } = props
 
-	let [prevPage, setPrevPage] = React.useState(activePage);
+	let [prevPage, setPrevPage] = React.useState(activePage)
 
 	const getUsers = React.useCallback(
 		(page, limit) => {
-			fetchUsers(page, limit).then((values) =>
-				setUsers(values[0], Number(values[1]))
-			);
+			fetchUsers(page, limit).then((values) => setUsers(values[0], Number(values[1])))
 		},
 		[setUsers]
-	);
+	)
 
 	React.useEffect(() => {
 		if (!users.length || prevPage !== activePage) {
-			setPrevPage(activePage);
-			getUsers(activePage, pageLimit);
+			setPrevPage(activePage)
+			getUsers(activePage, pageLimit)
 		}
-	}, [users, activePage, pageLimit, prevPage, getUsers]);
+	}, [users, activePage, pageLimit, prevPage, getUsers])
 
-	const totalPages = Array.from(
-		{ length: Math.ceil(total / pageLimit) },
-		(v, i) => ++i
-	);
+	const totalPages = Array.from({ length: Math.ceil(total / pageLimit) }, (v, i) => ++i)
 
 	if (users.length) {
 		switch (child) {
@@ -53,7 +39,7 @@ const UsersContainer = (props) => {
 						pageLimit={pageLimit}
 						totalPages={totalPages}
 					/>
-				);
+				)
 			case "messages":
 				return (
 					<MessagesContainer
@@ -65,11 +51,11 @@ const UsersContainer = (props) => {
 						pageLimit={pageLimit}
 						totalPages={totalPages}
 					/>
-				);
+				)
 			default:
 		}
 	}
-};
+}
 
 const mapStateToProps = (state) => {
 	return {
@@ -78,14 +64,7 @@ const mapStateToProps = (state) => {
 		activePage: state.users.activePage,
 		pageLimit: state.users.pageLimit,
 		profile: state.profile.profile,
-	};
-};
+	}
+}
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setUsers: (users, total) => dispatch(setUsersAc(users, total)),
-		setActivePage: (pageNumber) => dispatch(setActivePageAc(pageNumber)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, { setUsers, setActivePage })(UsersContainer)

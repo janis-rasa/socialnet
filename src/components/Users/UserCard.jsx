@@ -1,7 +1,7 @@
-import React from "react";
-import { Card, Col } from "react-bootstrap";
-import styles from "./UserCard.module.scss";
-import defaultUserIcon from "../../assets/images/default-user.svg";
+import React from "react"
+import { Card, Col } from "react-bootstrap"
+import styles from "./UserCard.module.scss"
+import defaultUserIcon from "../../assets/images/default-user.svg"
 
 const UserCard = (props) => {
 	return (
@@ -18,7 +18,7 @@ const UserCard = (props) => {
 				</Card.Body>
 			</Card>
 		</Col>
-	);
-};
+	)
+}
 
-export default UserCard;
+export default UserCard

@@ -1,11 +1,11 @@
-const ADD_MESSAGE = "ADD_MESSAGE";
-const UPDATE_MESSAGE = "UPDATE_MESSAGE";
-const SET_MESSAGES = "SET_MESSAGES";
+const ADD_MESSAGE = "ADD_MESSAGE"
+const UPDATE_MESSAGE = "UPDATE_MESSAGE"
+const SET_MESSAGES = "SET_MESSAGES"
 
 let initialState = {
 	correspondence: [],
 	newMessage: "",
-};
+}
 
 const messagesReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -13,43 +13,42 @@ const messagesReducer = (state = initialState, action) => {
 			return {
 				...state,
 				correspondence: state.correspondence.map((element) => {
-					if (element.userId === action.userId) {
-						element.correspondence = [
-							...element.correspondence,
+					if (element.targetUserId === action.targetUserId) {
+						element.messages = [
+							...element.messages,
 							{
 								text: state.newMessage,
 								timestamp: Date.now(),
 								isOwn: true,
 							},
-						];
+						]
 					}
-					return element;
+					return element
 				}),
 				newMessage: "",
-			};
+			}
 		case UPDATE_MESSAGE:
-			return { ...state, newMessage: action.text };
+			return { ...state, newMessage: action.text }
 		case SET_MESSAGES:
-			return { ...state, correspondence: action.correspondence };
+			return { ...state, correspondence: action.correspondence }
 		default:
-			return state;
+			return state
 	}
-};
+}
 
-export const addMessageAC = (targetUserId, currentUserId) => ({
+export const addMessage = (targetUserId) => ({
 	type: ADD_MESSAGE,
 	targetUserId: targetUserId,
-	userId: currentUserId,
-});
+})
 
-export const updateMessageAC = (text) => ({
+export const updateMessage = (text) => ({
 	type: UPDATE_MESSAGE,
 	text: text,
-});
+})
 
-export const setMessagesAC = (correspondence) => ({
+export const setMessages = (correspondence) => ({
 	type: SET_MESSAGES,
 	correspondence: correspondence,
-});
+})
 
-export default messagesReducer;
+export default messagesReducer
