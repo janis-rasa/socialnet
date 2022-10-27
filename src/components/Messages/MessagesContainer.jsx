@@ -1,65 +1,24 @@
 import React from "react"
 import { connect } from "react-redux"
-import { useLocation } from "react-router-dom"
-import { fetchUserMessages } from "../../api/messages"
-import { fetchUserByName } from "../../api/users"
-import { setMessages } from "../../redux/messages-reducer"
 import Messages from "./Messages"
 
 const MessagesContainer = (props) => {
-	let {
-		users,
-		profile,
-		activePage,
-		total,
-		setActivePage,
-		pageLimit,
-		correspondence,
-		totalPages,
-		setMessages,
-	} = props
-	const [targetUserId, setTargetUserId] = React.useState(0)
-	const [targetUserFullName, setTargetUserFullName] = React.useState("")
-	let location = useLocation().pathname.split("/")
+	let { users, profile, activePage, total, setActivePage, pageLimit, totalPages } = props
+	const [targetUserName, setTargetUserName] = React.useState("")
 
-	const getMessages = React.useCallback(
-		(userId) => {
-			fetchUserMessages(userId).then((response) => setMessages(response[0].correspondence))
-		},
-		[setMessages]
+	return (
+		<Messages
+			users={users}
+			profile={profile}
+			activePage={activePage}
+			total={total}
+			setActivePage={setActivePage}
+			pageLimit={pageLimit}
+			totalPages={totalPages}
+			targetUserName={targetUserName}
+			setTargetUserName={setTargetUserName}
+		/>
 	)
-
-	React.useEffect(() => {
-		if (!correspondence.length) {
-			getMessages(profile.userId)
-		}
-		if (!location[2] && targetUserId) {
-			setTargetUserId(0)
-		} else if (location[2] && !targetUserId) {
-			fetchUserByName(location[2]).then((user) => {
-				setTargetUserFullName(user.firstName + " " + user.lastName)
-				setTargetUserId(user.userId)
-			})
-		}
-	}, [users, location, profile, correspondence, getMessages, setTargetUserId, targetUserId])
-
-	if (correspondence.length) {
-		return (
-			<Messages
-				users={users}
-				profile={profile}
-				activePage={activePage}
-				total={total}
-				setActivePage={setActivePage}
-				pageLimit={pageLimit}
-				totalPages={totalPages}
-				targetUserId={targetUserId}
-				setTargetUserId={setTargetUserId}
-				setTargetUserFullName={setTargetUserFullName}
-				targetUserFullName={targetUserFullName}
-			/>
-		)
-	}
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -71,8 +30,7 @@ const mapStateToProps = (state, ownProps) => {
 		setActivePage: ownProps.setActivePage,
 		pageLimit: ownProps.pageLimit,
 		totalPages: ownProps.totalPages,
-		correspondence: state.messagesPage.correspondence,
 	}
 }
 
-export default connect(mapStateToProps, { setMessages })(MessagesContainer)
+export default connect(mapStateToProps)(MessagesContainer)

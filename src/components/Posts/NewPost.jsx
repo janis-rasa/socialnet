@@ -1,67 +1,67 @@
-import React, { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import React, { useState } from "react"
+import { Button, Modal, Form } from "react-bootstrap"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro"
 
 const NewPost = (props) => {
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
 
 	const handleOnPostChange = (event) => {
-		props.updatePost(event);
-	};
+		props.handleUpdatePost(event)
+	}
 
 	const handleAddPost = (event) => {
-		event.preventDefault();
-		props.addPost(event);
-		handleClose();
-	};
+		event.preventDefault()
+		props.handleAddPost()
+		handleClose()
+	}
 
 	return (
-		<div className="mb-3">
-			<Button variant="primary" onClick={handleShow}>
-				<FontAwesomeIcon icon={regular("square-plus")} size="lg" />
-				<span className="ms-2">Add new post</span>
+		<div className='mb-3'>
+			<Button variant='primary' onClick={handleShow}>
+				<FontAwesomeIcon icon={regular("square-plus")} size='lg' />
+				<span className='ms-2'>Add new post</span>
 			</Button>
-			<Modal show={show} onHide={handleClose} size="lg">
+			<Modal show={show} onHide={handleClose}>
 				<Form onSubmit={handleAddPost}>
 					<Modal.Header closeButton>
 						<Modal.Title>New post</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form.Group className="mb-3" controlId="postTitle">
+						<Form.Group className='mb-3' controlId='postTitle'>
 							<Form.Label>Post title</Form.Label>
 							<Form.Control
-								type="text"
+								type='text'
 								required
 								onChange={handleOnPostChange}
-								name="postTitle"
+								name='postTitle'
 								value={props.newPost.postTitle}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="postText">
+						<Form.Group className='mb-3' controlId='postText'>
 							<Form.Label>Post text</Form.Label>
 							<Form.Control
-								as="textarea"
-								rows={5}
+								as='textarea'
+								rows={7}
 								required
 								onChange={handleOnPostChange}
-								name="postText"
+								name='postText'
 								value={props.newPost.postText}
 							/>
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant="primary" type="submit">
-							<FontAwesomeIcon icon={regular("square-check")} size="lg" />
-							<span className="ms-2">Save post</span>
+						<Button variant='primary' type='submit'>
+							<FontAwesomeIcon icon={regular("square-check")} size='lg' />
+							<span className='ms-2'>Save post</span>
 						</Button>
 					</Modal.Footer>
 				</Form>
 			</Modal>
 		</div>
-	);
-};
+	)
+}
 
-export default NewPost;
+export default NewPost

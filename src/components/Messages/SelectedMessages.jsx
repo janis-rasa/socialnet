@@ -4,21 +4,22 @@ import MessagesList from "./MessagesList"
 import { Alert } from "react-bootstrap"
 
 const SelectedMessages = (props) => {
-	if (props.selectedMessages.length) {
+	if (props.messages.length) {
 		return (
 			<React.Fragment>
+				<h2 className='fs-4'>Chat with user {props.targetUserFullName}</h2>
+				<AddMessage
+					targetUserFullName={props.targetUserFullName}
+					newMessageText={props.newMessageText}
+					addNewMessage={props.addNewMessage}
+					updateMessage={props.updateMessage}
+					setAlert={props.setAlert}
+				/>
 				<MessagesList
-					selectedMessages={props.selectedMessages}
+					messages={props.messages}
 					currentUserId={props.currentUserId}
 					targetUserId={props.targetUserId}
 					userLocale={props.profile.userLocale}
-					targetUserFullName={props.targetUserFullName}
-				/>
-				<AddMessage
-					newMessage={props.newMessage}
-					addMessage={props.addMessage}
-					updateMessage={props.updateMessage}
-					setAlert={props.setAlert}
 				/>
 			</React.Fragment>
 		)

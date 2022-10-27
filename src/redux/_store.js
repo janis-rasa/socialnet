@@ -1,5 +1,5 @@
-import messagesReducer from "./messages-reducer";
-import postsReducer from "./posts-reducer";
+import messagesReducer from "./messages-reducer"
+import postsReducer from "./posts-reducer"
 
 let store = {
 	_state: {
@@ -122,7 +122,7 @@ let store = {
 					],
 				},
 			],
-			newMessage: "",
+			newMessageText: "",
 		},
 		users: [
 			{ firstName: "First", lastName: "User", userId: 1 },
@@ -145,25 +145,22 @@ let store = {
 		},
 	},
 	_callSubscriber() {
-		console.log("render");
+		console.log("render")
 	},
 	getState() {
-		return this._state;
+		return this._state
 	},
 	subscribe(observer) {
-		this._callSubscriber = observer;
+		this._callSubscriber = observer
 	},
 	dispatch(action) {
-		this._state.postsPage = postsReducer(this._state.postsPage, action);
-		this._state.messagesPage = messagesReducer(
-			this._state.messagesPage,
-			action
-		);
-		this._callSubscriber();
+		this._state.postsPage = postsReducer(this._state.postsPage, action)
+		this._state.messagesPage = messagesReducer(this._state.messagesPage, action)
+		this._callSubscriber()
 	},
-};
+}
 
 // @ts-ignore
-window.store = store;
+window.store = store
 
-export default store;
+export default store

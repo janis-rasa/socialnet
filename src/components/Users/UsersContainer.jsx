@@ -6,13 +6,25 @@ import { fetchUsers } from "../../api/users"
 import MessagesContainer from "../Messages/MessagesContainer"
 
 const UsersContainer = (props) => {
-	let { users, setUsers, total, profile, activePage, setActivePage, pageLimit, child } = props
+	let {
+		users,
+		total,
+		profile,
+		activePage,
+		lastEvaluatedKey,
+		pageLimit,
+		child,
+		setActivePage,
+		setUsers,
+	} = props
 
 	let [prevPage, setPrevPage] = React.useState(activePage)
 
 	const getUsers = React.useCallback(
-		(page, limit) => {
-			fetchUsers(page, limit).then((values) => setUsers(values[0], Number(values[1])))
+		(limit, lastKey) => {
+			fetchUsers(limit, lastKey).then((response) => {
+				setUsers(response)
+			})
 		},
 		[setUsers]
 	)
@@ -20,9 +32,9 @@ const UsersContainer = (props) => {
 	React.useEffect(() => {
 		if (!users.length || prevPage !== activePage) {
 			setPrevPage(activePage)
-			getUsers(activePage, pageLimit)
+			getUsers(pageLimit, lastEvaluatedKey)
 		}
-	}, [users, activePage, pageLimit, prevPage, getUsers])
+	}, [users, activePage, pageLimit, prevPage, lastEvaluatedKey, getUsers])
 
 	const totalPages = Array.from({ length: Math.ceil(total / pageLimit) }, (v, i) => ++i)
 
@@ -63,6 +75,7 @@ const mapStateToProps = (state) => {
 		total: state.users.total,
 		activePage: state.users.activePage,
 		pageLimit: state.users.pageLimit,
+		lastEvaluatedKey: state.users.lastEvaluatedKey,
 		profile: state.profile.profile,
 	}
 }

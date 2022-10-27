@@ -13,16 +13,10 @@ let initialState = {
 const postsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_POST:
-			const newPost = {
-				title: state.newPost.postTitle,
-				text: state.newPost.postText,
-				id: Date.now(),
-				imageUrl: randomImage(),
-			}
 			return {
 				...state,
 				newPost: { postTitle: "", postText: "" },
-				posts: [...state.posts, newPost],
+				posts: [action.newPost, ...state.posts],
 			}
 		case UPDATE_POST:
 			return { ...state, newPost: { ...state.newPost, ...action.postValue } }
@@ -33,7 +27,7 @@ const postsReducer = (state = initialState, action) => {
 	}
 }
 
-export const addPost = () => ({ type: ADD_POST })
+export const addPost = (newPost) => ({ type: ADD_POST, newPost: newPost })
 
 export const updatePost = (postValue) => ({
 	type: UPDATE_POST,
@@ -46,8 +40,3 @@ export const setPosts = (posts) => ({
 })
 
 export default postsReducer
-
-const randomImage = () => {
-	const randomAct = Math.floor(Math.random() * 167772)
-	return "https://loremflickr.com/480/270/abstract?" + randomAct
-}

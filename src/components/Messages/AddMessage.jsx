@@ -6,11 +6,11 @@ import { Button, Form } from "react-bootstrap"
 const AddMessage = (props) => {
 	const handleSaveMessage = (event) => {
 		event.preventDefault()
-		if (!props.newMessage) {
+		if (!props.newMessageText) {
 			props.setAlert(true, "Please add the message!", "danger")
-			return
+		} else {
+			props.addNewMessage()
 		}
-		props.addMessage()
 	}
 
 	const handleUpdateMessage = (event) => {
@@ -19,15 +19,15 @@ const AddMessage = (props) => {
 
 	return (
 		<React.Fragment>
-			<Form className='pt-3'>
-				<hr />
-				<Form.Group className='mt-3 mb-3' controlId='message'>
-					<Form.Label>New message</Form.Label>
+			<hr />
+			<Form className='text-end'>
+				<Form.Group className='mb-3' controlId='message'>
+					<Form.Label className='fw-bold'>New message</Form.Label>
 					<Form.Control
 						as='textarea'
 						rows={5}
 						onChange={handleUpdateMessage}
-						value={props.newMessage}
+						value={props.newMessageText}
 						required
 					/>
 				</Form.Group>
@@ -36,6 +36,7 @@ const AddMessage = (props) => {
 					<span className='ms-2'>Send message</span>
 				</Button>
 			</Form>
+			<hr />
 		</React.Fragment>
 	)
 }

@@ -12,11 +12,10 @@ const Messages = (props) => {
 		}
 		return (
 			<MessagesNavItem
-				setTargetUserId={props.setTargetUserId}
-				setTargetUserFullName={props.setTargetUserFullName}
+				setTargetUserName={props.setTargetUserName}
+				targetUserName={props.targetUserName}
 				user={user}
 				key={"user" + index}
-				targetUserId={props.targetUserId}
 			/>
 		)
 	})
@@ -41,9 +40,10 @@ const Messages = (props) => {
 							path=':userName'
 							element={
 								<SelectedMessagesContainer
-									setTargetUserId={props.setTargetUserId}
-									targetUserId={props.targetUserId}
+									targetUserName={props.targetUserName}
 									targetUserFullName={props.targetUserFullName}
+									setTargetUserName={props.setTargetUserName}
+									setTargetUserFullName={props.setTargetUserFullName}
 								/>
 							}
 						/>
