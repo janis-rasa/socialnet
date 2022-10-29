@@ -1,6 +1,6 @@
 export const STAGE = "/dev/"
 export const API_URL = "https://localhost:4000"
-export const postData = (data = {}) => ({
+const FETCH_OPTIONS = {
 	method: "POST", // *GET, POST, PUT, DELETE, etc.
 	mode: "cors", // no-cors, *cors, same-origin
 	cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -11,5 +11,17 @@ export const postData = (data = {}) => ({
 	},
 	redirect: "follow", // manual, *follow, error
 	referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-	body: JSON.stringify(data), // body data type must match "Content-Type" header
-})
+	body: "",
+}
+export const postData = (data = {}) => {
+	let fetchOptions = { ...FETCH_OPTIONS }
+	fetchOptions.body = JSON.stringify(data)
+	return fetchOptions
+}
+
+export const deleteData = (data) => {
+	let fetchOptions = { ...FETCH_OPTIONS }
+	fetchOptions.method = "DELETE"
+	fetchOptions.body = JSON.stringify(data)
+	return fetchOptions
+}

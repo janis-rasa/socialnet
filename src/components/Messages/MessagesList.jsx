@@ -4,17 +4,15 @@ import { Card, Col, Row } from "react-bootstrap"
 const MessagesList = (props) => {
 	const messagesRender = props.messages.map((message, index) => {
 		const date = new Date(message.unixTimestamp)
+		const isOwn = message.userId === props.currentUserId
 		return (
-			<Row
-				key={"message" + index}
-				className={message.userId === props.currentUserId ? "justify-content-end" : ""}
-			>
+			<Row key={"message" + index} className={isOwn && "justify-content-end"}>
 				<Col xs='11' lg='9'>
 					<Card className='mb-3'>
 						<Card.Body>
 							<Card.Text>{message.text}</Card.Text>
 						</Card.Body>
-						<Card.Footer className={(message.isOwn && "text-end ") + "text-muted "}>
+						<Card.Footer className={(isOwn ? "text-end " : "") + "text-muted"}>
 							{date.toLocaleString(props.userLocale)}
 						</Card.Footer>
 					</Card>
