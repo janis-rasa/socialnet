@@ -1,6 +1,6 @@
 {
 	"name": "social",
-	"version": "0.31.0",
+	"version": "0.32.0",
 	"private": true,
 	"description": "Simple social net project",
 	"author": "JanisDeveloper <janis@developer.lv>",
@@ -24,7 +24,7 @@
 		"web-vitals": "^3.0.3"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "set HTTPS=true&&set SSL_CRT_FILE=./keys/cert.pem&&set SSL_KEY_FILE=./keys/key.pem&&react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test"
 	},
