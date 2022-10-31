@@ -9,6 +9,8 @@ const ProfileContainer = (props) => {
 	let { isCurrent, targetProfile, setTargetProfile } = props
 	let { userName } = useParams()
 
+	console.log(props)
+
 	const getUser = React.useCallback(
 		(targetUserName) => {
 			fetchUserByName(targetUserName).then((user) => setTargetProfile(user))

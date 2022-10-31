@@ -4,7 +4,7 @@ const FETCH_OPTIONS = {
 	method: "POST", // *GET, POST, PUT, DELETE, etc.
 	mode: "cors", // no-cors, *cors, same-origin
 	cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-	credentials: "same-origin", // include, *same-origin, omit
+	credentials: "include", // include, *same-origin, omit
 	headers: {
 		"Content-Type": "application/json",
 		// 'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,8 +20,13 @@ export const postData = (data = {}) => {
 }
 
 export const deleteData = (data) => {
-	let fetchOptions = { ...FETCH_OPTIONS }
-	fetchOptions.method = "DELETE"
+	let fetchOptions = { ...FETCH_OPTIONS, method: "DELETE" }
 	fetchOptions.body = JSON.stringify(data)
+	return fetchOptions
+}
+
+export const getData = () => {
+	let fetchOptions = { ...FETCH_OPTIONS, method: "GET" }
+	delete fetchOptions.body
 	return fetchOptions
 }

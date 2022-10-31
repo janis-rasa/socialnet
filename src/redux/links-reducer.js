@@ -4,10 +4,11 @@ let initialState = [
 	{ link: "/posts", linkTitle: "Posts" },
 	{ link: "/messages", linkTitle: "Messages" },
 	{ link: "/users", linkTitle: "Users" },
-];
+	{ link: "/login", linkTitle: "Login" },
+]
 
 const navLinksReducer = (state = initialState) => {
-	return state;
-};
+	return state
+}
 
-export default navLinksReducer;
+export default navLinksReducer

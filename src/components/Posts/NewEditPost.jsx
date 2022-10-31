@@ -4,14 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { regular } from "@fortawesome/fontawesome-svg-core/import.macro"
 
 const NewEditPost = (props) => {
-	let [isSubmitDisabled, setSubmitDisabled] = React.useState(false)
 	const handleOnPostChange = (event) => {
 		props.updatePost(event)
 	}
 
 	const handleAddEditPost = (event) => {
 		event.preventDefault()
-		setSubmitDisabled(true)
 		props.saveNewEditPost()
 	}
 
@@ -38,7 +36,7 @@ const NewEditPost = (props) => {
 					value={props.currentPost.text}
 				/>
 			</Form.Group>
-			<Button variant='primary' type='submit' disabled={isSubmitDisabled}>
+			<Button variant='primary' type='submit' disabled={props.isSubmitPostDisabled}>
 				<FontAwesomeIcon icon={regular("square-check")} size='lg' />
 				<span className='ms-2'>Save post</span>
 			</Button>

@@ -1,9 +1,20 @@
-import { API_URL, postData, STAGE } from "./api"
+import { API_URL, getData, postData, STAGE } from "./api"
 
-export async function fetchUserMessages(userId, targetUserId) {
-	return fetch(
-		API_URL + STAGE + "messages?userId=" + userId + "&targetUserId=" + targetUserId
-	).then((response) =>
+export async function fetchUserMessages(targetUserId) {
+	const options = getData()
+	// @ts-ignore
+	return fetch(API_URL + STAGE + "messages?targetUserId=" + targetUserId, options).then(
+		(response) =>
+			response.json().then((response) => {
+				return response.Items
+			})
+	)
+}
+
+export async function fetchTargetUserMessages(targetUserId) {
+	const options = getData()
+	// @ts-ignore
+	return fetch(API_URL + STAGE + "messages?userId=" + targetUserId, options).then((response) =>
 		response.json().then((response) => {
 			return response.Items
 		})

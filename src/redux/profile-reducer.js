@@ -1,9 +1,11 @@
 const SET_PROFILE = "SET_PROFILE"
 const SET_TARGET_PROFILE = "SET_TARGET_PROFILE"
+const SET_ACTIVE_USER = "SET_ACTIVE_USER"
+const CLEAR_PROFILE = "CLEAR_PROFILE"
 
 let initialState = {
 	profile: {},
-	activeUserId: 1,
+	activeUserId: 0,
 	targetProfile: {},
 }
 
@@ -13,6 +15,10 @@ const profileReducer = (state = initialState, action) => {
 			return { ...state, profile: action.profile }
 		case SET_TARGET_PROFILE:
 			return { ...state, targetProfile: action.targetProfile }
+		case SET_ACTIVE_USER:
+			return { ...state, activeUserId: action.activeUserId }
+		case CLEAR_PROFILE:
+			return { ...initialState }
 		default:
 			return state
 	}
@@ -23,9 +29,15 @@ export const setProfile = (user) => ({
 	profile: user,
 })
 
+export const setActiveUser = (userId) => ({ type: SET_ACTIVE_USER, activeUserId: userId })
+
 export const setTargetProfile = (user) => ({
 	type: SET_TARGET_PROFILE,
 	targetProfile: user,
+})
+
+export const clearProfileData = () => ({
+	type: CLEAR_PROFILE,
 })
 
 export default profileReducer

@@ -35,6 +35,7 @@ const PostList = (props) => {
 						updatePost={props.updatePost}
 						currentPost={props.currentPost}
 						saveNewEditPost={props.saveNewEditPost}
+						isSubmitPostDisabled={props.isSubmitPostDisabled}
 					/>
 				)}
 				{props.modalOptions.type === "view" && <PostBody post={props.currentPost} />}

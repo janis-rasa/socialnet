@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const MessagesNavItem = (props) => {
 	const handleActiveUser = () => {
-		//props.setTargetUserName(props.user.userName)
+		props.setTargetUserName(props.user.userName)
 	}
 
 	return (

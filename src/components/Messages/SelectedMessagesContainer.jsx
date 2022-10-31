@@ -2,9 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import { setAlert } from "../../redux/alert-reducer"
-import { addMessage, setTargetUser, updateMessage } from "../../redux/messages-reducer"
-import { setMessages } from "../../redux/messages-reducer"
-import { fetchUserMessages, postNewMessage } from "../../api/messages"
+import { addMessage, setTargetUser, updateMessage, setMessages } from "../../redux/messages-reducer"
+import { fetchUserMessages, postNewMessage, fetchTargetUserMessages } from "../../api/messages"
 import { fetchUserByName } from "../../api/users"
 import SelectedMessages from "./SelectedMessages"
 import { arraySort } from "../../utils/sort"
@@ -37,14 +36,17 @@ const SelectedMessagesContainer = (props) => {
 	}
 
 	const getMessages = React.useCallback(
-		(userId, targetUserId) => {
-			Promise.all([
-				fetchUserMessages(userId, targetUserId),
-				fetchUserMessages(targetUserId, userId),
-			]).then((response) => {
-				let selectedMessages = arraySort([...response[0], ...response[1]], "unixTimestamp", "DESC")
-				setMessages(selectedMessages)
-			})
+		(targetUserId) => {
+			Promise.all([fetchUserMessages(targetUserId), fetchTargetUserMessages(targetUserId)]).then(
+				(response) => {
+					let selectedMessages = arraySort(
+						[...response[0], ...response[1]],
+						"unixTimestamp",
+						"DESC"
+					)
+					setMessages(selectedMessages)
+				}
+			)
 		},
 		[setMessages]
 	)
@@ -57,13 +59,13 @@ const SelectedMessagesContainer = (props) => {
 	)
 
 	React.useEffect(() => {
-		if (profile.activeUserId && targetUser.userId) {
-			getMessages(profile.activeUserId, targetUser.userId)
+		if (targetUser.userId) {
+			getMessages(targetUser.userId)
 		}
 		if (userName !== targetUser.userName) {
 			getTargetUser(userName)
 		}
-	}, [getMessages, getTargetUser, targetUser, profile, userName])
+	}, [getMessages, getTargetUser, targetUser, userName])
 
 	return (
 		!!messages.length && (

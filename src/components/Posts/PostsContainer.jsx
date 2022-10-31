@@ -10,6 +10,7 @@ const PostsContainer = (props) => {
 	const [show, setShow] = React.useState(false)
 	const [modalTitle, setModalTitle] = React.useState("")
 	const [modalType, setModalType] = React.useState("")
+	let [isSubmitPostDisabled, setSubmitPostDisabled] = React.useState(false)
 
 	const modalOptions = React.useMemo(
 		() => ({ type: modalType, title: modalTitle, show: show }),
@@ -43,12 +44,9 @@ const PostsContainer = (props) => {
 		})
 	}
 
-	const getPosts = React.useCallback(
-		(postId) => {
-			fetchPosts(postId).then((response) => setPosts(response))
-		},
-		[setPosts]
-	)
+	const getPosts = React.useCallback(() => {
+		fetchPosts().then((response) => setPosts(response))
+	}, [setPosts])
 
 	const updatePost = (event) => {
 		updateCurrentPost({ [event.target.name]: event.target.value })
@@ -60,6 +58,7 @@ const PostsContainer = (props) => {
 	}
 
 	const saveNewEditPost = () => {
+		setSubmitPostDisabled(true)
 		const currentPostData = {
 			title: currentPost.title,
 			text: currentPost.text,
@@ -74,13 +73,14 @@ const PostsContainer = (props) => {
 				currentPostData.postId = response.postId
 				setShow(false)
 				addPost(currentPostData)
+				setSubmitPostDisabled(false)
 			}
 		})
 	}
 
 	React.useEffect(() => {
 		if (!posts.length) {
-			getPosts(userId)
+			getPosts()
 		}
 	}, [posts, userId, getPosts])
 
@@ -90,6 +90,7 @@ const PostsContainer = (props) => {
 				currentPost={currentPost}
 				posts={posts}
 				modalOptions={modalOptions}
+				isSubmitPostDisabled={isSubmitPostDisabled}
 				setShow={setShow}
 				setModalType={setModalType}
 				saveNewEditPost={saveNewEditPost}

@@ -1,25 +1,29 @@
-import { API_URL, deleteData, postData, STAGE } from "./api"
+import { API_URL, deleteData, getData, postData, STAGE } from "./api"
 
-export async function fetchPosts(userId) {
-	return fetch(API_URL + STAGE + "posts?userId=" + userId).then((response) =>
+export async function fetchPosts() {
+	const options = getData()
+	// @ts-ignore
+	return fetch(API_URL + STAGE + "posts", options).then((response) =>
 		response.json().then((response) => response.Items)
 	)
 }
 
-export async function fetchPost(userId, postId) {
-	return fetch(API_URL + STAGE + "posts?userId=" + userId + "&postId=" + postId).then((response) =>
+export async function fetchPost(postId) {
+	const options = getData()
+	// @ts-ignore
+	return fetch(API_URL + STAGE + "posts?postId=" + postId, options).then((response) =>
 		response.json().then((response) => response.Items)
 	)
 }
 
 export async function postNewUpdatePost(post) {
-	const data = postData(post)
+	const options = postData(post)
 	// @ts-ignore
-	return fetch(API_URL + STAGE + "posts/create", data).then((response) => response.json())
+	return fetch(API_URL + STAGE + "posts/create", options).then((response) => response.json())
 }
 
 export async function fetchDeletePost(postId, unixTimestamp) {
-	const data = deleteData({ postId: postId, unixTimestamp: unixTimestamp })
+	const options = deleteData({ postId: postId, unixTimestamp: unixTimestamp })
 	// @ts-ignore
-	return fetch(API_URL + STAGE + "posts", data).then((response) => response.json())
+	return fetch(API_URL + STAGE + "posts", options).then((response) => response.json())
 }
