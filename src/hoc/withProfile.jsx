@@ -1,5 +1,5 @@
 import React from "react"
-import { fetchUser } from "../api/users"
+import { fetchUser } from "../api/usersAPI"
 import { connect } from "react-redux"
 import { setProfile } from "../redux/profile-reducer"
 

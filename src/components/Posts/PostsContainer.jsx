@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { fetchDeletePost, fetchPosts, postNewUpdatePost } from "../../api/posts"
+import { fetchDeletePost, fetchPosts, postNewUpdatePost } from "../../api/postsAPI"
 import { addPost, updateCurrentPost, setPosts, removePost } from "../../redux/posts-reducer"
 import PostList from "./PostList"
 

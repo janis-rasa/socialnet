@@ -1,6 +1,6 @@
 {
 	"name": "social",
-	"version": "0.33.0",
+	"version": "0.34.0",
 	"private": true,
 	"description": "Simple social net project",
 	"author": "JanisDeveloper <janis@developer.lv>",
@@ -21,6 +21,7 @@
 		"react-router-dom": "^6.4.1",
 		"react-scripts": "5.0.1",
 		"redux": "^4.2.0",
+		"redux-thunk": "^2.4.1",
 		"web-vitals": "^3.0.3"
 	},
 	"scripts": {

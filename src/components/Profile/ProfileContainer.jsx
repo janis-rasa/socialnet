@@ -2,14 +2,12 @@ import React from "react"
 import { connect } from "react-redux"
 import Profile from "./Profile"
 import { useParams } from "react-router-dom"
-import { fetchUserByName } from "../../api/users"
+import { fetchUserByName } from "../../api/usersAPI"
 import { setTargetProfile } from "../../redux/profile-reducer"
 
 const ProfileContainer = (props) => {
 	let { isCurrent, targetProfile, setTargetProfile } = props
 	let { userName } = useParams()
-
-	console.log(props)
 
 	const getUser = React.useCallback(
 		(targetUserName) => {

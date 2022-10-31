@@ -2,7 +2,7 @@ import React from "react"
 import Login from "./Login"
 import { connect } from "react-redux"
 import { setProfile } from "../../redux/profile-reducer"
-import { postCredentials } from "../../api/auth"
+import { postCredentials } from "../../api/authAPI"
 
 const LoginContainer = (props) => {
 	let { setProfile } = props

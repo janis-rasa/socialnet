@@ -1,3 +1,5 @@
+import { fetchUsers } from "../api/usersAPI"
+
 const SET_USERS = "SET_USERS"
 const SET_PAGE = "SET_PAGE"
 const SET_TOTAL = "SET_TOTAL"
@@ -38,5 +40,13 @@ export const setActivePage = (pageNumber) => ({
 	type: SET_PAGE,
 	activePage: pageNumber,
 })
+
+export const getUsersThunkCreator = (limit, lastKey = undefined) => {
+	return (dispatch) => {
+		fetchUsers(limit, lastKey).then((response) => {
+			dispatch(setUsers(response))
+		})
+	}
+}
 
 export default usersReducer

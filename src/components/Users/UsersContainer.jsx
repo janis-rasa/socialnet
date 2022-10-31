@@ -1,8 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
-import { setUsers, setActivePage } from "../../redux/users-reducer"
+import { setActivePage, getUsersThunkCreator } from "../../redux/users-reducer"
 import Users from "./Users"
-import { fetchUsers } from "../../api/users"
 import MessagesContainer from "../Messages/MessagesContainer"
 
 const UsersContainer = (props) => {
@@ -15,26 +14,14 @@ const UsersContainer = (props) => {
 		pageLimit,
 		child,
 		setActivePage,
-		setUsers,
+		getUsers,
 	} = props
 
-	let [prevPage, setPrevPage] = React.useState(activePage)
-
-	const getUsers = React.useCallback(
-		(limit, lastKey) => {
-			fetchUsers(limit, lastKey).then((response) => {
-				setUsers(response)
-			})
-		},
-		[setUsers]
-	)
-
 	React.useEffect(() => {
-		if (!users.length || prevPage !== activePage) {
-			setPrevPage(activePage)
+		if (!users.length) {
 			getUsers(pageLimit, lastEvaluatedKey)
 		}
-	}, [users, activePage, pageLimit, prevPage, lastEvaluatedKey, getUsers])
+	}, [users, pageLimit, lastEvaluatedKey, getUsers])
 
 	const totalPages = Array.from({ length: Math.ceil(total / pageLimit) }, (v, i) => ++i)
 
@@ -80,4 +67,6 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { setUsers, setActivePage })(UsersContainer)
+export default connect(mapStateToProps, { setActivePage, getUsers: getUsersThunkCreator })(
+	UsersContainer
+)
