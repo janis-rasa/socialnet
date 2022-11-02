@@ -11,7 +11,7 @@ import PostDelete from "./PostDelete"
 const PostList = (props) => {
 	const postsRender = props.posts.map((post, index) => (
 		<Col md={6} lg={4} className='d-flex mb-3' key={"post" + index}>
-			<Post post={post} modifyPost={props.modifyPost} />
+			<Post post={post} modifyPost={props.modifyPost} isSubmitDisabled={props.isSubmitDisabled} />
 		</Col>
 	))
 
@@ -35,7 +35,7 @@ const PostList = (props) => {
 						updatePost={props.updatePost}
 						currentPost={props.currentPost}
 						saveNewEditPost={props.saveNewEditPost}
-						isSubmitPostDisabled={props.isSubmitPostDisabled}
+						isSubmitDisabled={props.isSubmitDisabled}
 					/>
 				)}
 				{props.modalOptions.type === "view" && <PostBody post={props.currentPost} />}
@@ -44,6 +44,7 @@ const PostList = (props) => {
 						post={props.currentPost}
 						deletePost={props.deletePost}
 						setShow={props.setShow}
+						isSubmitDisabled={props.isSubmitDisabled}
 					/>
 				)}
 			</ModalCustom>

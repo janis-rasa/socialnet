@@ -39,6 +39,7 @@ const Post = (props) => {
 					size='sm'
 					className='ms-auto'
 					title='Edit post'
+					disabled={props.isSubmitDisabled}
 				>
 					<FontAwesomeIcon icon={regular("pen-to-square")} size='lg' />
 				</Button>
@@ -48,6 +49,7 @@ const Post = (props) => {
 					size='sm'
 					className='ms-2'
 					title='Delete post'
+					disabled={props.isSubmitDisabled}
 				>
 					<FontAwesomeIcon icon={regular("trash-can")} size='lg' />
 				</Button>

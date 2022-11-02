@@ -3,12 +3,10 @@ import { Button } from "react-bootstrap"
 
 const PostDelete = (props) => {
 	let { post, deletePost, setShow } = props
-	let [isDeleteDisabled, setDeleteDisabled] = React.useState(false)
 	const handleCancel = () => {
 		setShow(false)
 	}
 	const handleDelete = () => {
-		setDeleteDisabled(true)
 		deletePost(post)
 	}
 	return (
@@ -18,7 +16,7 @@ const PostDelete = (props) => {
 				<Button onClick={handleCancel} variant='success' className='me-auto'>
 					Cancel
 				</Button>
-				<Button onClick={handleDelete} variant='danger' disabled={isDeleteDisabled}>
+				<Button onClick={handleDelete} variant='danger' disabled={props.isSubmitDisabled}>
 					Delete
 				</Button>
 			</div>

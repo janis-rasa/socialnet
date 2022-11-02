@@ -1,16 +1,29 @@
 import React from "react"
 import { connect } from "react-redux"
-import { fetchDeletePost, fetchPosts, postNewUpdatePost } from "../../api/postsAPI"
-import { addPost, updateCurrentPost, setPosts, removePost } from "../../redux/posts-reducer"
+import {
+	updateCurrentPost,
+	getPostsThunkCreator,
+	postNewUpdatePostThunkCreator,
+	removePostThunkCreator,
+} from "../../redux/posts-reducer"
 import PostList from "./PostList"
 
 const PostsContainer = (props) => {
-	let { currentPost, posts, userId, setPosts, updateCurrentPost, addPost, removePost } = props
+	let {
+		currentPost,
+		posts,
+		userId,
+		updateCurrentPost,
+		getPosts,
+		isFetchingData,
+		postNewUpdatePost,
+		removePost,
+	} = props
 
 	const [show, setShow] = React.useState(false)
 	const [modalTitle, setModalTitle] = React.useState("")
 	const [modalType, setModalType] = React.useState("")
-	let [isSubmitPostDisabled, setSubmitPostDisabled] = React.useState(false)
+	let [isSubmitDisabled, setSubmitDisabled] = React.useState(false)
 
 	const modalOptions = React.useMemo(
 		() => ({ type: modalType, title: modalTitle, show: show }),
@@ -36,17 +49,9 @@ const PostsContainer = (props) => {
 	}
 
 	const deletePost = (post) => {
-		fetchDeletePost(post.postId, post.unixTimestamp).then((response) => {
-			if (response.postId) {
-				removePost(response.postId)
-				setShow(false)
-			}
-		})
+		removePost(post.postId, post.unixTimestamp)
+		setShow(false)
 	}
-
-	const getPosts = React.useCallback(() => {
-		fetchPosts().then((response) => setPosts(response))
-	}, [setPosts])
 
 	const updatePost = (event) => {
 		updateCurrentPost({ [event.target.name]: event.target.value })
@@ -58,7 +63,7 @@ const PostsContainer = (props) => {
 	}
 
 	const saveNewEditPost = () => {
-		setSubmitPostDisabled(true)
+		setSubmitDisabled(true)
 		const currentPostData = {
 			title: currentPost.title,
 			text: currentPost.text,
@@ -68,21 +73,19 @@ const PostsContainer = (props) => {
 			unixTimestamp: currentPost.unixTimestamp ? currentPost.unixTimestamp : Date.now(),
 			postId: currentPost.postId,
 		}
-		postNewUpdatePost(currentPostData).then((response) => {
-			if (response.postId) {
-				currentPostData.postId = response.postId
-				setShow(false)
-				addPost(currentPostData)
-				setSubmitPostDisabled(false)
-			}
-		})
+		postNewUpdatePost(currentPostData)
+		setShow(false)
 	}
 
 	React.useEffect(() => {
 		if (!posts.length) {
 			getPosts()
 		}
-	}, [posts, userId, getPosts])
+		console.log("isFetchingData: ", isFetchingData)
+		if (!isFetchingData) {
+			setSubmitDisabled(false)
+		}
+	}, [posts, getPosts, isFetchingData])
 
 	if (posts.length) {
 		return (
@@ -90,7 +93,7 @@ const PostsContainer = (props) => {
 				currentPost={currentPost}
 				posts={posts}
 				modalOptions={modalOptions}
-				isSubmitPostDisabled={isSubmitPostDisabled}
+				isSubmitDisabled={isSubmitDisabled}
 				setShow={setShow}
 				setModalType={setModalType}
 				saveNewEditPost={saveNewEditPost}
@@ -107,9 +110,13 @@ const mapStateToProps = (state) => {
 		currentPost: state.postsPage.currentPost,
 		posts: state.postsPage.posts,
 		userId: state.profile.activeUserId,
+		isFetchingData: state.postsPage.isFetchingData,
 	}
 }
 
-export default connect(mapStateToProps, { addPost, updateCurrentPost, setPosts, removePost })(
-	PostsContainer
-)
+export default connect(mapStateToProps, {
+	updateCurrentPost,
+	getPosts: getPostsThunkCreator,
+	postNewUpdatePost: postNewUpdatePostThunkCreator,
+	removePost: removePostThunkCreator,
+})(PostsContainer)

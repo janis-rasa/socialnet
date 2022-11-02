@@ -1,3 +1,6 @@
+import { postCredentials } from "../api/authAPI"
+import { fetchUserByName } from "../api/usersAPI"
+
 const SET_PROFILE = "SET_PROFILE"
 const SET_TARGET_PROFILE = "SET_TARGET_PROFILE"
 const SET_ACTIVE_USER = "SET_ACTIVE_USER"
@@ -39,5 +42,19 @@ export const setTargetProfile = (user) => ({
 export const clearProfileData = () => ({
 	type: CLEAR_PROFILE,
 })
+
+export const postCredentialsThunkCreator = (credentials) => {
+	return (dispatch) => {
+		postCredentials(credentials).then((response) => {
+			dispatch(setProfile(response))
+		})
+	}
+}
+
+export const getUserByNameThunkCreator = (targetUserName) => {
+	return (dispatch) => {
+		fetchUserByName(targetUserName).then((user) => dispatch(setTargetProfile(user)))
+	}
+}
 
 export default profileReducer

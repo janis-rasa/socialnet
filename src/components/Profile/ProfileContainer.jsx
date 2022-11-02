@@ -2,19 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import Profile from "./Profile"
 import { useParams } from "react-router-dom"
-import { fetchUserByName } from "../../api/usersAPI"
-import { setTargetProfile } from "../../redux/profile-reducer"
+import { getUserByNameThunkCreator } from "../../redux/profile-reducer"
 
 const ProfileContainer = (props) => {
-	let { isCurrent, targetProfile, setTargetProfile } = props
+	let { isCurrent, targetProfile, getUser } = props
 	let { userName } = useParams()
-
-	const getUser = React.useCallback(
-		(targetUserName) => {
-			fetchUserByName(targetUserName).then((user) => setTargetProfile(user))
-		},
-		[setTargetProfile]
-	)
 
 	React.useEffect(() => {
 		if (userName && userName !== targetProfile.userName) {
@@ -32,4 +24,6 @@ let mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { setTargetProfile })(ProfileContainer)
+export default connect(mapStateToProps, { setTargetProfile: getUserByNameThunkCreator })(
+	ProfileContainer
+)

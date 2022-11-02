@@ -2,11 +2,14 @@ import React from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import { setAlert } from "../../redux/alert-reducer"
-import { addMessage, setTargetUser, updateMessage, setMessages } from "../../redux/messages-reducer"
-import { fetchUserMessages, postNewMessage, fetchTargetUserMessages } from "../../api/messagesAPI"
-import { fetchUserByName } from "../../api/usersAPI"
+import {
+	addMessage,
+	updateMessage,
+	getMessagesThunkCreator,
+	getTargetUserThunkCreator,
+} from "../../redux/messages-reducer"
+import { postNewMessage } from "../../api/messagesAPI"
 import SelectedMessages from "./SelectedMessages"
-import { arraySort } from "../../utils/sort"
 
 const SelectedMessagesContainer = (props) => {
 	let {
@@ -16,8 +19,8 @@ const SelectedMessagesContainer = (props) => {
 		updateMessage,
 		messages,
 		setAlert,
-		setMessages,
-		setTargetUser,
+		getMessages,
+		getTargetUser,
 	} = props
 	let { userName } = useParams()
 
@@ -34,29 +37,6 @@ const SelectedMessagesContainer = (props) => {
 			}
 		})
 	}
-
-	const getMessages = React.useCallback(
-		(targetUserId) => {
-			Promise.all([fetchUserMessages(targetUserId), fetchTargetUserMessages(targetUserId)]).then(
-				(response) => {
-					let selectedMessages = arraySort(
-						[...response[0], ...response[1]],
-						"unixTimestamp",
-						"DESC"
-					)
-					setMessages(selectedMessages)
-				}
-			)
-		},
-		[setMessages]
-	)
-
-	const getTargetUser = React.useCallback(
-		(targetUserName) => {
-			fetchUserByName(targetUserName).then((response) => setTargetUser(response))
-		},
-		[setTargetUser]
-	)
 
 	React.useEffect(() => {
 		if (targetUser.userId) {
@@ -102,10 +82,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default connect(mapStateToProps, {
-	setMessages,
+	getMessages: getMessagesThunkCreator,
+	getTargetUser: getTargetUserThunkCreator,
 	addMessage,
 	updateMessage,
 	setAlert,
-	setTargetUser,
 	...mapDispatchToProps,
 })(SelectedMessagesContainer)

@@ -1,26 +1,18 @@
 import React from "react"
 import Login from "./Login"
 import { connect } from "react-redux"
-import { setProfile } from "../../redux/profile-reducer"
-import { postCredentials } from "../../api/authAPI"
+import { postCredentialsThunkCreator } from "../../redux/profile-reducer"
 
 const LoginContainer = (props) => {
-	let { setProfile } = props
 	const [email, setEmail] = React.useState("")
 	const [password, setPassword] = React.useState("")
 	let [isSubmitDisabled, setSubmitDisabled] = React.useState(false)
 
-	//const formData = React.useMemo(() => ({ password: password, email: email }), [password, email])
-
 	const submitLogin = () => {
-		setSubmitDisabled(false)
 		if (email && password) {
-			postCredentials({ password: password, email: email }).then((response) => {
-				setProfile(response)
-			})
-		} else {
-			// setSubmitDisabled(false)
+			props.postCredentials({ password: password, email: email })
 		}
+		setSubmitDisabled(false)
 	}
 
 	return (
@@ -35,8 +27,10 @@ const LoginContainer = (props) => {
 		/>
 	)
 }
-const mapStateToProps = (state) => {
-	return {}
-}
+const mapStateToProps = (state) => ({
+	activeUserId: state.profile.activeUserId,
+})
 
-export default connect(mapStateToProps, { setProfile })(LoginContainer)
+export default connect(mapStateToProps, { postCredentials: postCredentialsThunkCreator })(
+	LoginContainer
+)

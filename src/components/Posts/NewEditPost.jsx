@@ -36,7 +36,7 @@ const NewEditPost = (props) => {
 					value={props.currentPost.text}
 				/>
 			</Form.Group>
-			<Button variant='primary' type='submit' disabled={props.isSubmitPostDisabled}>
+			<Button variant='primary' type='submit' disabled={props.isSubmitDisabled}>
 				<FontAwesomeIcon icon={regular("square-check")} size='lg' />
 				<span className='ms-2'>Save post</span>
 			</Button>

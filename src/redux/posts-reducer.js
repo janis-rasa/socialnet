@@ -1,8 +1,11 @@
+import { fetchDeletePost, fetchPosts, postNewUpdatePost } from "../api/postsAPI"
+
 const ADD_POST = "ADD_POST"
 const UPDATE_CURRENT_POST = "UPDATE_CURRENT_POST"
 const SET_POSTS = "SET_POSTS"
 const SET_POST_DATA = "SET_POST_DATA"
 const DELETE_POST = "DELETE_POST"
+const FETCHING_DATA = "FETCHING_DATA"
 
 const initialPost = {
 	title: "",
@@ -16,6 +19,7 @@ const initialPost = {
 let initialState = {
 	posts: [],
 	currentPost: { ...initialPost },
+	isFetchingData: false,
 }
 
 const postsReducer = (state = initialState, action) => {
@@ -49,6 +53,8 @@ const postsReducer = (state = initialState, action) => {
 		case DELETE_POST:
 			const currentPosts = state.posts.filter((post) => post.postId !== action.postId)
 			return { ...state, posts: currentPosts }
+		case FETCHING_DATA:
+			return { ...state, isFetchingData: action.isFetchingData }
 		default:
 			return state
 	}
@@ -66,8 +72,44 @@ export const setPosts = (posts) => ({
 	posts: posts,
 })
 
+export const fetchingData = (isFetchingData) => ({
+	type: FETCHING_DATA,
+	isFetchingData: isFetchingData,
+})
+
 export const setEditPostData = (postData) => ({ type: SET_POST_DATA, postData: postData })
 
 export const removePost = (postId) => ({ type: DELETE_POST, postId: postId })
+
+export const getPostsThunkCreator = () => {
+	return (dispatch) => {
+		fetchPosts().then((response) => dispatch(setPosts(response)))
+	}
+}
+
+export const postNewUpdatePostThunkCreator = (currentPostData) => {
+	return (dispatch) => {
+		dispatch(fetchingData(true))
+		postNewUpdatePost(currentPostData).then((response) => {
+			if (response.postId) {
+				currentPostData.postId = response.postId
+				dispatch(addPost(currentPostData))
+				dispatch(fetchingData(false))
+			}
+		})
+	}
+}
+
+export const removePostThunkCreator = (postId, unixTimestamp) => {
+	return (dispatch) => {
+		dispatch(fetchingData(true))
+		fetchDeletePost(postId, unixTimestamp).then((response) => {
+			if (response.postId) {
+				dispatch(removePost(response.postId))
+				dispatch(fetchingData(false))
+			}
+		})
+	}
+}
 
 export default postsReducer
