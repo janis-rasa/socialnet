@@ -4,9 +4,11 @@ import homePageReducer from "./home-reducer"
 import navLinksReducer from "./links-reducer"
 import messagesReducer from "./messages-reducer"
 import postsReducer from "./posts-reducer"
-import profileReducer from "./profile-reducer"
+import profileReducer, { clearProfileData, setActiveUser, setProfile } from "./profile-reducer"
 import usersReducer from "./users-reducer"
-import thunkMiddleware from "redux-thunk"
+import thunk from "redux-thunk"
+import { isAuth } from "../api/authAPI"
+import { fetchUser } from "../api/usersAPI"
 
 let reducers = combineReducers({
 	postsPage: postsReducer,
@@ -18,7 +20,21 @@ let reducers = combineReducers({
 	homePage: homePageReducer,
 })
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware))
+let store = createStore(
+	reducers,
+	applyMiddleware(
+		thunk.withExtraArgument({
+			authFetch: isAuth().then((response) => {
+				if (response.success) {
+					store.dispatch(setActiveUser(response.userId))
+					fetchUser(response.userId).then((user) => store.dispatch(setProfile(user)))
+				} else {
+					store.dispatch(clearProfileData())
+				}
+			}),
+		})
+	)
+)
 
 export default store
 

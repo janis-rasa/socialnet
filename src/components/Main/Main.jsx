@@ -10,39 +10,41 @@ import UsersContainer from "../Users/UsersContainer"
 import LoginContainer from "../Login/LoginContainer"
 
 const Main = () => {
-	const location = useLocation()
-	const [displayLocation, setDisplayLocation] = React.useState(location)
-	const [transitionStage, setTransitionStage] = React.useState(styles.fadeIn)
+	// const location = useLocation()
+	// const [displayLocation, setDisplayLocation] = React.useState(location)
+	// const [transitionStage, setTransitionStage] = React.useState(styles.fadeIn)
 
-	React.useEffect(() => {
+	/*React.useEffect(() => {
 		if (location !== displayLocation) {
 			setTransitionStage(styles.fadeOut)
 		}
-	}, [location, displayLocation])
+	}, [location, displayLocation])*/
 
+	/*
 	const handleTransitionEnd = () => {
 		if (transitionStage === styles.fadeOut) {
 			setTransitionStage(styles.fadeIn)
 			setDisplayLocation(location)
 		}
-	}
-
+	} 
+	*/
+	//location={displayLocation}
 	return (
 		<main className={styles.wrapper}>
-			<div className={transitionStage} onAnimationEnd={handleTransitionEnd}>
-				<Container className='py-5'>
-					<Routes location={displayLocation}>
-						<Route path='/' element={<HomeContainer />} />
-						<Route path='/profile' element={<ProfileContainer isCurrent={true} />} />
-						<Route path='/profile/:userName' element={<ProfileContainer isCurrent={false} />} />
-						<Route path='/posts' element={<PostsContainer />} />
-						<Route path='/messages/*' element={<UsersContainer child='messages' />} />
-						<Route path='/users' element={<UsersContainer child='users' />} />
-						<Route path='/login' element={<LoginContainer />} />
-						<Route path='*' element={<NoMatch />} />
-					</Routes>
-				</Container>
-			</div>
+			{/*<div className={transitionStage} onAnimationEnd={handleTransitionEnd}>*/}
+			<Container className='py-5'>
+				<Routes>
+					<Route path='/' element={<HomeContainer />} />
+					<Route path='/login' element={<LoginContainer />} />
+					<Route path='/profile' element={<ProfileContainer isCurrent={true} />} />
+					<Route path='/profile/:userName' element={<ProfileContainer isCurrent={false} />} />
+					<Route path='/posts' element={<PostsContainer />} />
+					<Route path='/messages/*' element={<UsersContainer child='messages' />} />
+					<Route path='/users' element={<UsersContainer child='users' />} />
+					<Route path='*' element={<NoMatch />} />
+				</Routes>
+			</Container>
+			{/*</div>*/}
 		</main>
 	)
 }

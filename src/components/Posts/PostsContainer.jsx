@@ -1,5 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
+import { compose } from "redux"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 import {
 	updateCurrentPost,
 	getPostsThunkCreator,
@@ -12,7 +14,7 @@ const PostsContainer = (props) => {
 	let {
 		currentPost,
 		posts,
-		userId,
+		activeUserId,
 		updateCurrentPost,
 		getPosts,
 		isFetchingData,
@@ -68,7 +70,7 @@ const PostsContainer = (props) => {
 			title: currentPost.title,
 			text: currentPost.text,
 			imageUrl: currentPost.imageUrl ? currentPost.imageUrl : randomImage(),
-			userId: userId,
+			userId: activeUserId,
 			isActive: 1,
 			unixTimestamp: currentPost.unixTimestamp ? currentPost.unixTimestamp : Date.now(),
 			postId: currentPost.postId,
@@ -109,14 +111,17 @@ const mapStateToProps = (state) => {
 	return {
 		currentPost: state.postsPage.currentPost,
 		posts: state.postsPage.posts,
-		userId: state.profile.activeUserId,
+		activeUserId: state.profile.activeUserId,
 		isFetchingData: state.postsPage.isFetchingData,
 	}
 }
 
-export default connect(mapStateToProps, {
-	updateCurrentPost,
-	getPosts: getPostsThunkCreator,
-	postNewUpdatePost: postNewUpdatePostThunkCreator,
-	removePost: removePostThunkCreator,
-})(PostsContainer)
+export default compose(
+	connect(mapStateToProps, {
+		updateCurrentPost,
+		getPosts: getPostsThunkCreator,
+		postNewUpdatePost: postNewUpdatePostThunkCreator,
+		removePost: removePostThunkCreator,
+	}),
+	withAuthRedirect
+)(PostsContainer)

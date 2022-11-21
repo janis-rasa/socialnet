@@ -1,10 +1,10 @@
 let initialState = [
-	{ link: "/", linkTitle: "Home" },
-	{ link: "/profile", linkTitle: "Profile" },
-	{ link: "/posts", linkTitle: "Posts" },
-	{ link: "/messages", linkTitle: "Messages" },
-	{ link: "/users", linkTitle: "Users" },
-	{ link: "/login", linkTitle: "Login" },
+	{ link: "/", linkTitle: "Home", isProtected: false },
+	{ link: "/profile", linkTitle: "Profile", isProtected: true },
+	{ link: "/posts", linkTitle: "Posts", isProtected: true },
+	{ link: "/messages", linkTitle: "Messages", isProtected: true },
+	{ link: "/users", linkTitle: "Users", isProtected: true },
+	{ link: "/login", linkTitle: "Login", isProtected: false },
 ]
 
 const navLinksReducer = (state = initialState) => {

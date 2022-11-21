@@ -4,7 +4,6 @@ import Main from "../Main/Main"
 import { setProfile } from "../../redux/profile-reducer"
 import { connect } from "react-redux"
 import AlertContainer from "../AlertFixed/AlertContainer"
-//import { fetchUser } from "../../api/users"
 
 const App = (props) => {
 	// let { profile, activeUserId, setProfile } = props

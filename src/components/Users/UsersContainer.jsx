@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { setActivePage, getUsersThunkCreator } from "../../redux/users-reducer"
 import Users from "./Users"
 import MessagesContainer from "../Messages/MessagesContainer"
+import { compose } from "redux"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
 const UsersContainer = (props) => {
 	let {
@@ -56,7 +58,7 @@ const UsersContainer = (props) => {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
 	return {
 		users: state.users.users,
 		total: state.users.total,
@@ -64,9 +66,12 @@ const mapStateToProps = (state) => {
 		pageLimit: state.users.pageLimit,
 		lastEvaluatedKey: state.users.lastEvaluatedKey,
 		profile: state.profile.profile,
+		activeUserId: state.profile.activeUserId,
+		child: ownProps.child,
 	}
 }
 
-export default connect(mapStateToProps, { setActivePage, getUsers: getUsersThunkCreator })(
-	UsersContainer
-)
+export default compose(
+	connect(mapStateToProps, { setActivePage, getUsers: getUsersThunkCreator }),
+	withAuthRedirect
+)(UsersContainer)

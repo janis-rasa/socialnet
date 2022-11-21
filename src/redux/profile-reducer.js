@@ -1,15 +1,19 @@
-import { postCredentials } from "../api/authAPI"
-import { fetchUserByName } from "../api/usersAPI"
+import { isAuth, postCredentials } from "../api/authAPI"
+import { fetchUser, fetchUserByName } from "../api/usersAPI"
+import { setAlert } from "./alert-reducer"
 
 const SET_PROFILE = "SET_PROFILE"
 const SET_TARGET_PROFILE = "SET_TARGET_PROFILE"
 const SET_ACTIVE_USER = "SET_ACTIVE_USER"
 const CLEAR_PROFILE = "CLEAR_PROFILE"
+const LOGIN_ERROR = "LOGIN_ERROR"
 
 let initialState = {
 	profile: {},
 	activeUserId: 0,
+	expDate: 0,
 	targetProfile: {},
+	loginError: {},
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -22,6 +26,8 @@ const profileReducer = (state = initialState, action) => {
 			return { ...state, activeUserId: action.activeUserId }
 		case CLEAR_PROFILE:
 			return { ...initialState }
+		case LOGIN_ERROR:
+			return { ...state, loginError: action.error }
 		default:
 			return state
 	}
@@ -34,7 +40,7 @@ export const setProfile = (user) => ({
 
 export const setActiveUser = (userId) => ({ type: SET_ACTIVE_USER, activeUserId: userId })
 
-export const setTargetProfile = (user) => ({
+const setTargetProfile = (user) => ({
 	type: SET_TARGET_PROFILE,
 	targetProfile: user,
 })
@@ -43,10 +49,23 @@ export const clearProfileData = () => ({
 	type: CLEAR_PROFILE,
 })
 
+const loginError = (response) => ({
+	type: LOGIN_ERROR,
+	error: response,
+})
+
 export const postCredentialsThunkCreator = (credentials) => {
 	return (dispatch) => {
 		postCredentials(credentials).then((response) => {
-			dispatch(setProfile(response))
+			if (response.success) {
+				dispatch(setActiveUser(response.userId))
+				fetchUser(response.userId).then((user) => dispatch(setProfile(user)))
+				loginError({})
+			} else {
+				dispatch(clearProfileData())
+				dispatch(loginError(response))
+				dispatch(setAlert(true, response.err, "danger"))
+			}
 		})
 	}
 }
@@ -54,6 +73,18 @@ export const postCredentialsThunkCreator = (credentials) => {
 export const getUserByNameThunkCreator = (targetUserName) => {
 	return (dispatch) => {
 		fetchUserByName(targetUserName).then((user) => dispatch(setTargetProfile(user)))
+	}
+}
+
+export const checkAuthThunkCreator = () => {
+	return (dispatch) => {
+		isAuth().then((response) => {
+			if (response.success) {
+				dispatch(setActiveUser(response.userId))
+			} else {
+				dispatch(clearProfileData())
+			}
+		})
 	}
 }
 

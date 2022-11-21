@@ -3,27 +3,32 @@ import { connect } from "react-redux"
 import Profile from "./Profile"
 import { useParams } from "react-router-dom"
 import { getUserByNameThunkCreator } from "../../redux/profile-reducer"
+import { compose } from "redux"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect"
 
 const ProfileContainer = (props) => {
-	let { isCurrent, targetProfile, getUser } = props
+	let { isCurrent, targetProfile, getUser, activeUserId } = props
 	let { userName } = useParams()
 
 	React.useEffect(() => {
-		if (userName && userName !== targetProfile.userName) {
+		if (activeUserId && userName && userName !== targetProfile.userName) {
 			getUser(userName)
 		}
-	}, [targetProfile, userName, getUser])
+	}, [targetProfile, userName, activeUserId, getUser])
 
 	return <Profile profile={isCurrent ? props.profile : props.targetProfile} />
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state, ownProps) => {
 	return {
 		profile: state.profile.profile,
 		targetProfile: state.profile.targetProfile,
+		activeUserId: state.profile.activeUserId,
+		isCurrent: ownProps.isCurrent,
 	}
 }
 
-export default connect(mapStateToProps, { setTargetProfile: getUserByNameThunkCreator })(
-	ProfileContainer
-)
+export default compose(
+	connect(mapStateToProps, { getUser: getUserByNameThunkCreator }),
+	withAuthRedirect
+)(ProfileContainer)
