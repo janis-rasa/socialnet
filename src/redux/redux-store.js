@@ -9,6 +9,7 @@ import usersReducer from "./users-reducer"
 import thunk from "redux-thunk"
 import { isAuth } from "../api/authAPI"
 import { fetchUser } from "../api/usersAPI"
+import appReducer, { setLoading } from "./app-reducer"
 
 let reducers = combineReducers({
 	postsPage: postsReducer,
@@ -18,6 +19,7 @@ let reducers = combineReducers({
 	navLinks: navLinksReducer,
 	customAlert: alertReducer,
 	homePage: homePageReducer,
+	app: appReducer,
 })
 
 let store = createStore(
@@ -26,10 +28,14 @@ let store = createStore(
 		thunk.withExtraArgument({
 			authFetch: isAuth().then((response) => {
 				if (response.success) {
-					store.dispatch(setActiveUser(response.userId))
-					fetchUser(response.userId).then((user) => store.dispatch(setProfile(user)))
+					store.dispatch(setActiveUser(response.userId, response.expireTimestamp))
+					fetchUser(response.userId).then((user) => {
+						store.dispatch(setProfile(user))
+						setTimeout(() => store.dispatch(setLoading(false)), 200)
+					})
 				} else {
 					store.dispatch(clearProfileData())
+					setTimeout(() => store.dispatch(setLoading(false)), 200)
 				}
 			}),
 		})

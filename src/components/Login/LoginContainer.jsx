@@ -2,7 +2,7 @@ import React from "react"
 import Login from "./Login"
 import { connect } from "react-redux"
 import { postCredentialsThunkCreator } from "../../redux/profile-reducer"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const LoginContainer = (props) => {
 	const { loginError, activeUserId } = props
@@ -10,13 +10,17 @@ const LoginContainer = (props) => {
 	const [password, setPassword] = React.useState("")
 	let [isSubmitDisabled, setSubmitDisabled] = React.useState(false)
 	const navigate = useNavigate()
+	const location = useLocation()
+
+	const from = location.state?.from?.pathname || "/"
 
 	React.useEffect(() => {
 		setSubmitDisabled(false)
 		if (activeUserId) {
-			navigate("/")
+			console.log(from)
+			navigate(from, { replace: true })
 		}
-	}, [loginError, activeUserId, navigate])
+	}, [loginError, activeUserId, from, navigate])
 
 	const submitLogin = () => {
 		setSubmitDisabled(true)

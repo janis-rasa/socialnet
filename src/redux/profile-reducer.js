@@ -11,7 +11,7 @@ const LOGIN_ERROR = "LOGIN_ERROR"
 let initialState = {
 	profile: {},
 	activeUserId: 0,
-	expDate: 0,
+	expireTimestamp: 0,
 	targetProfile: {},
 	loginError: {},
 }
@@ -23,7 +23,11 @@ const profileReducer = (state = initialState, action) => {
 		case SET_TARGET_PROFILE:
 			return { ...state, targetProfile: action.targetProfile }
 		case SET_ACTIVE_USER:
-			return { ...state, activeUserId: action.activeUserId }
+			return {
+				...state,
+				activeUserId: action.activeUserId,
+				expireTimestamp: action.expireTimestamp,
+			}
 		case CLEAR_PROFILE:
 			return { ...initialState }
 		case LOGIN_ERROR:
@@ -38,7 +42,11 @@ export const setProfile = (user) => ({
 	profile: user,
 })
 
-export const setActiveUser = (userId) => ({ type: SET_ACTIVE_USER, activeUserId: userId })
+export const setActiveUser = (userId, expireTimestamp) => ({
+	type: SET_ACTIVE_USER,
+	activeUserId: userId,
+	expireTimestamp: expireTimestamp,
+})
 
 const setTargetProfile = (user) => ({
 	type: SET_TARGET_PROFILE,
@@ -58,7 +66,7 @@ export const postCredentialsThunkCreator = (credentials) => {
 	return (dispatch) => {
 		postCredentials(credentials).then((response) => {
 			if (response.success) {
-				dispatch(setActiveUser(response.userId))
+				dispatch(setActiveUser(response.userId, response.expireTimestamp))
 				fetchUser(response.userId).then((user) => dispatch(setProfile(user)))
 				loginError({})
 			} else {
@@ -80,7 +88,7 @@ export const checkAuthThunkCreator = () => {
 	return (dispatch) => {
 		isAuth().then((response) => {
 			if (response.success) {
-				dispatch(setActiveUser(response.userId))
+				dispatch(setActiveUser(response.userId, response.expireTimestamp))
 			} else {
 				dispatch(clearProfileData())
 			}

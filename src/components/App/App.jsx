@@ -4,10 +4,9 @@ import Main from "../Main/Main"
 import { setProfile } from "../../redux/profile-reducer"
 import { connect } from "react-redux"
 import AlertContainer from "../AlertFixed/AlertContainer"
+import Loader from "../Loader/Loader"
 
 const App = (props) => {
-	// let { profile, activeUserId, setProfile } = props
-
 	/* const getUser = React.useCallback(
 		(userId) => {
 			fetchUser(userId).then((response) => setProfile(response))
@@ -21,7 +20,9 @@ const App = (props) => {
 		}
 	}, [activeUserId, profile, getUser]) */
 
-	return (
+	return props.isLoading ? (
+		<Loader />
+	) : (
 		<React.Fragment>
 			<AlertContainer />
 			<HeaderContainer />
@@ -31,8 +32,7 @@ const App = (props) => {
 }
 const mapStateToProps = (state) => {
 	return {
-		activeUserId: state.profile.activeUserId,
-		profile: state.profile.profile,
+		isLoading: state.app.isLoading,
 	}
 }
 
