@@ -66,12 +66,12 @@ const mapStateToProps = (state, ownProps) => {
 		pageLimit: state.users.pageLimit,
 		lastEvaluatedKey: state.users.lastEvaluatedKey,
 		profile: state.profile.profile,
-		activeUserId: state.profile.activeUserId,
 		child: ownProps.child,
 	}
 }
 
 export default compose(
-	connect(mapStateToProps, { setActivePage, getUsers: getUsersThunkCreator }),
-	withAuthRedirect
+	withAuthRedirect,
+	connect(mapStateToProps, { setActivePage, getUsers: getUsersThunkCreator })
+	// @ts-ignore
 )(UsersContainer)

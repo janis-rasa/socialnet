@@ -3,6 +3,7 @@ import Login from "./Login"
 import { connect } from "react-redux"
 import { postCredentialsThunkCreator } from "../../redux/profile-reducer"
 import { useLocation, useNavigate } from "react-router-dom"
+import { setLoadingThunkCreator } from "../../redux/app-reducer"
 
 const LoginContainer = (props) => {
 	const { loginError, activeUserId } = props
@@ -17,14 +18,13 @@ const LoginContainer = (props) => {
 	React.useEffect(() => {
 		setSubmitDisabled(false)
 		if (activeUserId) {
-			console.log(from)
 			navigate(from, { replace: true })
 		}
 	}, [loginError, activeUserId, from, navigate])
 
 	const submitLogin = () => {
-		setSubmitDisabled(true)
 		if (email && password) {
+			props.setLoading(true)
 			props.postCredentials({ password: password, email: email })
 		}
 	}
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => ({
 	loginError: state.profile.loginError,
 })
 
-export default connect(mapStateToProps, { postCredentials: postCredentialsThunkCreator })(
-	LoginContainer
-)
+export default connect(mapStateToProps, {
+	postCredentials: postCredentialsThunkCreator,
+	setLoading: setLoadingThunkCreator,
+})(LoginContainer)

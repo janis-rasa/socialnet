@@ -83,7 +83,6 @@ const PostsContainer = (props) => {
 		if (!posts.length) {
 			getPosts()
 		}
-		console.log("isFetchingData: ", isFetchingData)
 		if (!isFetchingData) {
 			setSubmitDisabled(false)
 		}
@@ -117,11 +116,12 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
+	withAuthRedirect,
 	connect(mapStateToProps, {
 		updateCurrentPost,
 		getPosts: getPostsThunkCreator,
 		postNewUpdatePost: postNewUpdatePostThunkCreator,
 		removePost: removePostThunkCreator,
-	}),
-	withAuthRedirect
+	})
+	// @ts-ignore
 )(PostsContainer)

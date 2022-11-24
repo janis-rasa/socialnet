@@ -17,7 +17,7 @@ export const setLoading = (isLoading) => {
 	return { type: LOADING, isLoading: isLoading }
 }
 
-export const LoadingThunkCreator = (isLoading) => {
+export const setLoadingThunkCreator = (isLoading) => {
 	return (dispatch) => {
 		dispatch(setLoading(isLoading))
 	}

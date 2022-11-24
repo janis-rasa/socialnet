@@ -5,6 +5,7 @@ let initialState = [
 	{ link: "/messages", linkTitle: "Messages", isProtected: true },
 	{ link: "/users", linkTitle: "Users", isProtected: true },
 	{ link: "/login", linkTitle: "Login", isProtected: false },
+	{ link: "/logout", linkTitle: "Logout", isProtected: true },
 ]
 
 const navLinksReducer = (state = initialState) => {

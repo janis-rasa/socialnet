@@ -1,18 +1,21 @@
 import React from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, Navigate } from "react-router-dom"
+import { connect } from "react-redux"
+
+const mapStateToProps = (state) => ({
+	activeUserId: state.profile.activeUserId,
+})
 
 export const withAuthRedirect = (PassedComponent) => {
 	const WrappedComponent = (props) => {
 		const location = useLocation()
-		const navigate = useNavigate()
 		let { activeUserId } = props
-		React.useEffect(() => {
-			if (!activeUserId) {
-				navigate("/login", { state: { from: location }, replace: true })
-			}
-		}, [activeUserId, location, navigate])
-		return <PassedComponent {...props} />
+		return activeUserId ? (
+			<PassedComponent {...props} />
+		) : (
+			<Navigate to='/login' state={{ from: location }} replace={true} />
+		)
 	}
 
-	return WrappedComponent
+	return connect(mapStateToProps, {})(WrappedComponent)
 }

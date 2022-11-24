@@ -10,6 +10,16 @@ export async function postCredentials(userCredentials) {
 	}
 }
 
+export async function logoutCurrentUser() {
+	const options = postData()
+	try {
+		// @ts-ignore
+		return await fetch(API_URL + STAGE + "logout", options).then((response) => response.json())
+	} catch (error) {
+		return error
+	}
+}
+
 export async function isAuth() {
 	const options = getData()
 	try {

@@ -1,6 +1,7 @@
-import { isAuth, postCredentials } from "../api/authAPI"
+import { isAuth, logoutCurrentUser, postCredentials } from "../api/authAPI"
 import { fetchUser, fetchUserByName } from "../api/usersAPI"
 import { setAlert } from "./alert-reducer"
+import { setLoading } from "./app-reducer"
 
 const SET_PROFILE = "SET_PROFILE"
 const SET_TARGET_PROFILE = "SET_TARGET_PROFILE"
@@ -68,12 +69,21 @@ export const postCredentialsThunkCreator = (credentials) => {
 			if (response.success) {
 				dispatch(setActiveUser(response.userId, response.expireTimestamp))
 				fetchUser(response.userId).then((user) => dispatch(setProfile(user)))
-				loginError({})
+				dispatch(loginError({}))
 			} else {
 				dispatch(clearProfileData())
 				dispatch(loginError(response))
 				dispatch(setAlert(true, response.err, "danger"))
 			}
+			dispatch(setLoading(false))
+		})
+	}
+}
+
+export const logoutThunkCreator = () => {
+	return (dispatch) => {
+		logoutCurrentUser().then((response) => {
+			dispatch(clearProfileData())
 		})
 	}
 }

@@ -8,6 +8,7 @@ import HomeContainer from "../Home/HomeContainer"
 import ProfileContainer from "../Profile/ProfileContainer"
 import UsersContainer from "../Users/UsersContainer"
 import LoginContainer from "../Login/LoginContainer"
+import LogoutContainer from "../Logout/LogoutContainer"
 
 const Main = () => {
 	// const location = useLocation()
@@ -36,6 +37,7 @@ const Main = () => {
 				<Routes>
 					<Route path='/' element={<HomeContainer />} />
 					<Route path='/login' element={<LoginContainer />} />
+					<Route path='/logout' element={<LogoutContainer />} />
 					<Route path='/profile' element={<ProfileContainer isCurrent={true} />} />
 					<Route path='/profile/:userName' element={<ProfileContainer isCurrent={false} />} />
 					<Route path='/posts' element={<PostsContainer />} />
