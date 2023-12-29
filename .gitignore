@@ -24,3 +24,5 @@ yarn-error.log*
 
 # Certificate keys
 keys
+
+package.json.lock
