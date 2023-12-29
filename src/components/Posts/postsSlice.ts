@@ -3,9 +3,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { PostIF } from '../../types/posts'
 
 const initialState = {
-	posts: [] as PostIF[],
-	currentPost: {} as PostIF,
-	isFetchingData: false,
+  posts: [] as PostIF[],
+  currentPost: {} as PostIF,
+  isFetchingData: false,
 }
 
 export const postsSlice = createSlice({
@@ -14,6 +14,10 @@ export const postsSlice = createSlice({
   reducers: {
     addPost: (state, action: PayloadAction<PostIF>) => {
       state.posts.push(action.payload)
-    }
-  }
+    },
+  },
 })
+
+export const { addPost } = postsSlice.actions
+
+export default postsSlice.reducer

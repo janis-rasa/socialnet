@@ -1,7 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import postsReducer from '../components/Posts/postsSlice'
+import isLoadingReducer from '../components/Loader/loaderSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    posts: postsReducer,
+    isLoading: isLoadingReducer,
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

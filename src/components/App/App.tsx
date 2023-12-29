@@ -1,13 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import HeaderContainer from '../Header/HeaderContainer'
 import Main from '../Main/Main'
-import { setProfile } from '../../redux/profile-reducer'
-import { connect } from 'react-redux'
 import AlertContainer from '../AlertFixed/AlertContainer'
 import Loader from '../Loader/Loader'
+import { RootState } from '../../store/store'
 
-const App = (props) => {
-  return props.isLoading ? (
+const App = () => {
+  const isLoading = useSelector((state: RootState) => state.isLoading.state)
+  return isLoading ? (
     <Loader />
   ) : (
     <React.Fragment>
@@ -17,10 +18,5 @@ const App = (props) => {
     </React.Fragment>
   )
 }
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.app.isLoading,
-  }
-}
 
-export default connect(mapStateToProps, { setProfile })(App)
+export default App
