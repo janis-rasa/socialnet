@@ -5,7 +5,7 @@ module.exports = {
   tabWidth: 2,
   useTabs: false,
   printWidth: 80,
-  endOfLine: 'crlf',
+  endOfLine: 'lf',
   insertPragma: false,
   requirePragma: false,
 }
