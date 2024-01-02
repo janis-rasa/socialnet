@@ -1,21 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import HeaderContainer from '../Header/HeaderContainer'
+import Header from '../Header/Header'
 import Main from '../Main/Main'
-import AlertContainer from '../AlertFixed/AlertContainer'
+// import AlertContainer from '../AlertFixed/AlertContainer'
 import Loader from '../Loader/Loader'
 import { RootState } from '../../store/store'
 
-const App = () => {
+const App = (): React.JSX.Element => {
   const isLoading = useSelector((state: RootState) => state.isLoading.state)
   return isLoading ? (
     <Loader />
   ) : (
-    <React.Fragment>
-      <AlertContainer />
-      <HeaderContainer />
+    <>
+      {/* <AlertContainer /> */}
+      <Header />
       <Main />
-    </React.Fragment>
+    </>
   )
 }
 

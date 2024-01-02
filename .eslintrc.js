@@ -30,8 +30,9 @@ module.exports = {
     'prettier',
     'eslint:recommended',
     'plugin:import/typescript',
-    'plugin:react/recommended',
     'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
   ],
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
@@ -57,5 +58,7 @@ module.exports = {
         ignorePropertyModificationsFor: ['state'],
       },
     ],
+    'react/jsx-uses-vars': 'error',
+    'react/jsx-uses-react': 'error',
   },
 }
